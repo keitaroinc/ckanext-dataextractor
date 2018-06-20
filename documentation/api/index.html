@@ -1,0 +1,777 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API guide &mdash; CKAN 2.5.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CKAN 2.5.2 documentation" href="../index.html"/>
+        <link rel="next" title="Legacy APIs" href="legacy-api.html"/>
+        <link rel="prev" title="Full table of contents" href="../contents.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> CKAN
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.5.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">API guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="legacy-api.html">Legacy APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-an-api-request">Making an API request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-importing-datasets-with-the-ckan-api">Example: Importing datasets with the CKAN API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-versions">API versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authentication-and-api-keys">Authentication and API keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-able-api-functions">GET-able API functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jsonp-support">JSONP support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#api-examples">API Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tags-not-in-a-vocabulary">Tags (not in a vocabulary)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tag-vocabularies">Tag Vocabularies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uploading-a-new-version-of-a-resource-file">Uploading a new version of a resource file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#action-api-reference">Action API reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-ckanext.dataextractor.logic.action.get">ckanext.dataextractor.logic.action.get</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ckanext.dataextractor.logic.action.create">ckanext.dataextractor.logic.action.create</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ckanext.dataextractor.logic.action.update">ckanext.dataextractor.logic.action.update</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ckanext-dataextractor-logic-action-patch">ckanext.dataextractor.logic.action.patch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ckanext.dataextractor.logic.action.delete">ckanext.dataextractor.logic.action.delete</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../contents.html">CKAN</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../contents.html">Docs</a> &raquo;</li>
+      
+    <li>API guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-guide">
+<h1>API guide<a class="headerlink" href="#api-guide" title="Permalink to this headline">¶</a></h1>
+<p>This section documents CKAN&#8217;s API, for developers who want to write code that
+interacts with CKAN sites and their data.</p>
+<p>CKAN&#8217;s <strong>Action API</strong> is a powerful, RPC-style API that exposes all of CKAN&#8217;s
+core features to API clients. All of a CKAN website&#8217;s core functionality
+(everything you can do with the web interface and more) can be used by external
+code that calls the CKAN API.  For example, using the CKAN API your app can:</p>
+<ul>
+<li><p class="first">Get JSON-formatted lists of a site&#8217;s datasets, groups or other CKAN objects:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/package_list">http://demo.ckan.org/api/3/action/package_list</a></p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/group_list">http://demo.ckan.org/api/3/action/group_list</a></p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/tag_list">http://demo.ckan.org/api/3/action/tag_list</a></p>
+</li>
+<li><p class="first">Get a full JSON representation of a dataset, resource or other object:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/package_show?id=adur_district_spending">http://demo.ckan.org/api/3/action/package_show?id=adur_district_spending</a></p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/tag_show?id=gold">http://demo.ckan.org/api/3/action/tag_show?id=gold</a></p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/group_show?id=data-explorer">http://demo.ckan.org/api/3/action/group_show?id=data-explorer</a></p>
+</li>
+<li><p class="first">Search for packages or resources matching a query:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/package_search?q=spending">http://demo.ckan.org/api/3/action/package_search?q=spending</a></p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/resource_search?query=name:District%20Names">http://demo.ckan.org/api/3/action/resource_search?query=name:District%20Names</a></p>
+</li>
+<li><p class="first">Create, update and delete datasets, resources and other objects</p>
+</li>
+<li><p class="first">Get an activity stream of recently changed datasets on a site:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/recently_changed_packages_activity_list">http://demo.ckan.org/api/3/action/recently_changed_packages_activity_list</a></p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>CKAN&#8217;s FileStore and DataStore have their own APIs, see:</p>
+<ul class="last simple">
+<li><tt class="xref doc docutils literal"><span class="pre">/maintaining/filestore</span></tt></li>
+<li><tt class="xref doc docutils literal"><span class="pre">/maintaining/datastore</span></tt></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For documentation of CKAN&#8217;s legacy API&#8217;s, see <a class="reference internal" href="legacy-api.html"><em>Legacy APIs</em></a>.</p>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="making-an-api-request">
+<h2>Making an API request<a class="headerlink" href="#making-an-api-request" title="Permalink to this headline">¶</a></h2>
+<p>To call the CKAN API, post a JSON dictionary in an HTTP POST request to one of
+CKAN&#8217;s API URLs. The parameters for the API function should be given in the
+JSON dictionary. CKAN will also return its response in a JSON dictionary.</p>
+<p>One way to post a JSON dictionary to a URL is using the command-line HTTP
+client <a class="reference external" href="http://httpie.org/">HTTPie</a>.  For example, to get a list of the names
+of all the datasets in the <tt class="docutils literal"><span class="pre">data-explorer</span></tt> group on demo.ckan.org, install
+HTTPie and then call the <tt class="docutils literal"><span class="pre">group_list</span></tt> API function by running this command
+in a terminal:</p>
+<div class="highlight-python"><div class="highlight"><pre>http http://demo.ckan.org/api/3/action/group_list id=data-explorer
+</pre></div>
+</div>
+<p>The response from CKAN will look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;help&quot;</span><span class="p">:</span> <span class="s">&quot;...&quot;</span><span class="p">,</span>
+    <span class="s">&quot;result&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s">&quot;data-explorer&quot;</span><span class="p">,</span>
+        <span class="s">&quot;department-of-ricky&quot;</span><span class="p">,</span>
+        <span class="s">&quot;geo-examples&quot;</span><span class="p">,</span>
+        <span class="s">&quot;geothermal-data&quot;</span><span class="p">,</span>
+        <span class="s">&quot;reykjavik&quot;</span><span class="p">,</span>
+        <span class="s">&quot;skeenawild-conservation-trust&quot;</span>
+    <span class="p">],</span>
+    <span class="s">&quot;success&quot;</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The response is a JSON dictionary with three keys:</p>
+<ol class="arabic">
+<li><p class="first"><tt class="docutils literal"><span class="pre">&quot;success&quot;</span></tt>: <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
+<p>The API aims to always return <tt class="docutils literal"><span class="pre">200</span> <span class="pre">OK</span></tt> as the status code of its HTTP
+response, whether there were errors with the request or not, so it&#8217;s
+important to always check the value of the <tt class="docutils literal"><span class="pre">&quot;success&quot;</span></tt> key in the response
+dictionary and (if success is <tt class="docutils literal"><span class="pre">false</span></tt>) check the value of the <tt class="docutils literal"><span class="pre">&quot;error&quot;</span></tt>
+key.</p>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If there are major formatting problems with a request to the API, CKAN
+may still return an HTTP response with a <tt class="docutils literal"><span class="pre">409</span></tt>, <tt class="docutils literal"><span class="pre">400</span></tt> or <tt class="docutils literal"><span class="pre">500</span></tt>
+status code (in increasing order of severity). In future CKAN versions
+we intend to remove these responses, and instead send a <tt class="docutils literal"><span class="pre">200</span> <span class="pre">OK</span></tt>
+response and use the <tt class="docutils literal"><span class="pre">&quot;success&quot;</span></tt> and <tt class="docutils literal"><span class="pre">&quot;error&quot;</span></tt> items.</p>
+</div>
+<ol class="arabic" start="2">
+<li><p class="first"><tt class="docutils literal"><span class="pre">&quot;result&quot;</span></tt>: the returned result from the function you called. The type
+and value of the result depend on which function you called. In the case of
+the <tt class="docutils literal"><span class="pre">group_list</span></tt> function it&#8217;s a list of strings, the names of all the
+datasets that belong to the group.</p>
+<p>If there was an error responding to your request, the dictionary will
+contain an <tt class="docutils literal"><span class="pre">&quot;error&quot;</span></tt> key with details of the error instead of the
+<tt class="docutils literal"><span class="pre">&quot;result&quot;</span></tt> key. A response dictionary containing an error will look like
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span>
+    <span class="s">&quot;help&quot;</span><span class="p">:</span> <span class="s">&quot;Creates a package&quot;</span><span class="p">,</span>
+    <span class="s">&quot;success&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+    <span class="s">&quot;error&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&quot;message&quot;</span><span class="p">:</span> <span class="s">&quot;Access denied&quot;</span><span class="p">,</span>
+        <span class="s">&quot;__type&quot;</span><span class="p">:</span> <span class="s">&quot;Authorization Error&quot;</span>
+        <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">&quot;help&quot;</span></tt>: the documentation string for the function you called.</p>
+</li>
+</ol>
+<p>The same HTTP request can be made using Python&#8217;s standard <tt class="docutils literal"><span class="pre">urllib2</span></tt> module,
+with this Python code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="c"># Use the json module to dump a dictionary to a string for posting.</span>
+<span class="n">data_string</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="s">&#39;data-explorer&#39;</span><span class="p">}))</span>
+
+<span class="c"># Make the HTTP request.</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&#39;http://demo.ckan.org/api/3/action/group_list&#39;</span><span class="p">,</span>
+        <span class="n">data_string</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="mi">200</span>
+
+<span class="c"># Use the json module to load CKAN&#39;s response into a dictionary.</span>
+<span class="n">response_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+<span class="c"># Check the contents of the response.</span>
+<span class="k">assert</span> <span class="n">response_dict</span><span class="p">[</span><span class="s">&#39;success&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">True</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">response_dict</span><span class="p">[</span><span class="s">&#39;result&#39;</span><span class="p">]</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-importing-datasets-with-the-ckan-api">
+<h2>Example: Importing datasets with the CKAN API<a class="headerlink" href="#example-importing-datasets-with-the-ckan-api" title="Permalink to this headline">¶</a></h2>
+<p>You can add datasets using CKAN&#8217;s web interface, but when importing many
+datasets it&#8217;s usually more efficient to automate the process in some way.  In
+this example, we&#8217;ll show you how to use the CKAN API to write a Python script
+to import datasets into CKAN.</p>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Make this script more interesting (eg. read data from a CSV file), and all
+put the script in a .py file somewhere with tests and import it here.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">urllib2</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pprint</span>
+
+<span class="c"># Put the details of the dataset we&#39;re going to create into a dict.</span>
+<span class="n">dataset_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;my_dataset_name&#39;</span><span class="p">,</span>
+    <span class="s">&#39;notes&#39;</span><span class="p">:</span> <span class="s">&#39;A long description of my dataset&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c"># Use the json module to dump the dictionary to a string for posting.</span>
+<span class="n">data_string</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">quote</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dataset_dict</span><span class="p">))</span>
+
+<span class="c"># We&#39;ll use the package_create function to create a new dataset.</span>
+<span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span>
+    <span class="s">&#39;http://www.my_ckan_site.com/api/action/package_create&#39;</span><span class="p">)</span>
+
+<span class="c"># Creating a dataset requires an authorization header.</span>
+<span class="c"># Replace *** with your API key, from your user account on the CKAN site</span>
+<span class="c"># that you&#39;re creating the dataset on.</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&#39;Authorization&#39;</span><span class="p">,</span> <span class="s">&#39;***&#39;</span><span class="p">)</span>
+
+<span class="c"># Make the HTTP request.</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">data_string</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span> <span class="o">==</span> <span class="mi">200</span>
+
+<span class="c"># Use the json module to load CKAN&#39;s response into a dictionary.</span>
+<span class="n">response_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="k">assert</span> <span class="n">response_dict</span><span class="p">[</span><span class="s">&#39;success&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">True</span>
+
+<span class="c"># package_create returns the created package as its result.</span>
+<span class="n">created_package</span> <span class="o">=</span> <span class="n">response_dict</span><span class="p">[</span><span class="s">&#39;result&#39;</span><span class="p">]</span>
+<span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">created_package</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more examples, see <a class="reference internal" href="#api-examples"><em>API Examples</em></a>.</p>
+</div>
+<div class="section" id="api-versions">
+<h2>API versions<a class="headerlink" href="#api-versions" title="Permalink to this headline">¶</a></h2>
+<p>The CKAN APIs are versioned. If you make a request to an API URL without a
+version number, CKAN will choose the latest version of the API:</p>
+<div class="highlight-python"><div class="highlight"><pre>http://demo.ckan.org/api/action/package_list
+</pre></div>
+</div>
+<p>Alternatively, you can specify the desired API version number in the URL that
+you request:</p>
+<div class="highlight-python"><div class="highlight"><pre>http://demo.ckan.org/api/3/action/package_list
+</pre></div>
+</div>
+<p>Version 3 is currently the only version of the Action API.</p>
+<p>We recommend that you specify the API number in your requests, because this
+ensures that your API client will work across different sites running different
+version of CKAN (and will keep working on the same sites, when those sites
+upgrade to new versions of CKAN). Because the latest version of the API may
+change when a site is upgraded to a new version of CKAN, or may differ on
+different sites running different versions of CKAN, the result of an API
+request that doesn&#8217;t specify the API version number cannot be relied on.</p>
+</div>
+<div class="section" id="authentication-and-api-keys">
+<span id="api-authentication"></span><h2>Authentication and API keys<a class="headerlink" href="#authentication-and-api-keys" title="Permalink to this headline">¶</a></h2>
+<p>Some API functions require authorization. The API uses the same authorization
+functions and configuration as the web interface, so if a user is authorized to
+do something in the web interface they&#8217;ll be authorized to do it via the API as
+well.</p>
+<p>When calling an API function that requires authorization, you must authenticate
+yourself by providing your API key with your HTTP request. To find your API
+key, login to the CKAN site using its web interface and visit your user profile
+page.</p>
+<p>To provide your API key in an HTTP request, include it in either an
+<tt class="docutils literal"><span class="pre">Authorization</span></tt> or <tt class="docutils literal"><span class="pre">X-CKAN-API-Key</span></tt> header.  (The name of the HTTP header
+can be configured with the <tt class="docutils literal"><span class="pre">apikey_header_name</span></tt> option in your CKAN
+configuration file.)</p>
+<p>For example, to ask whether or not you&#8217;re currently following the user
+<tt class="docutils literal"><span class="pre">markw</span></tt> on demo.ckan.org using HTTPie, run this command:</p>
+<div class="highlight-python"><div class="highlight"><pre>http http://demo.ckan.org/api/3/action/am_following_user id=markw Authorization:XXX
+</pre></div>
+</div>
+<p>(Replacing <tt class="docutils literal"><span class="pre">XXX</span></tt> with your API key.)</p>
+<p>Or, to get the list of activities from your user dashboard on demo.ckan.org,
+run this Python code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s">&#39;http://demo.ckan.org/api/3/action/dashboard_activity_list&#39;</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s">&#39;Authorization&#39;</span><span class="p">,</span> <span class="s">&#39;XXX&#39;</span><span class="p">)</span>
+<span class="n">response_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">&#39;{}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-able-api-functions">
+<h2>GET-able API functions<a class="headerlink" href="#get-able-api-functions" title="Permalink to this headline">¶</a></h2>
+<p>Functions defined in <a href="#id2"><span class="problematic" id="id3">`ckan.logic.action.get`_</span></a> can also be called with an HTTP
+GET request.  For example, to get the list of datasets (packages) from
+demo.ckan.org, open this URL in your browser:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/package_list">http://demo.ckan.org/api/3/action/package_list</a></p>
+<p>Or, to search for datasets (packages) matching the search query <tt class="docutils literal"><span class="pre">spending</span></tt>,
+on demo.ckan.org, open this URL in your browser:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/package_search?q=spending">http://demo.ckan.org/api/3/action/package_search?q=spending</a></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Browser plugins like <a class="reference external" href="https://addons.mozilla.org/en-us/firefox/addon/jsonview/">JSONView for Firefox</a>
+or <a class="reference external" href="https://chrome.google.com/webstore/detail/jsonview/chklaanhfefbnpoihckbnefhakgolnmc">Chrome</a>
+will format and color CKAN&#8217;s JSON response nicely in your browser.</p>
+</div>
+<p>The search query is given as a URL parameter <tt class="docutils literal"><span class="pre">?q=spending</span></tt>. Multiple
+URL parameters can be appended, separated by <tt class="docutils literal"><span class="pre">&amp;</span></tt> characters, for example
+to get only the first 10 matching datasets open this URL:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/package_search?q=spending&amp;rows=10">http://demo.ckan.org/api/3/action/package_search?q=spending&amp;rows=10</a></p>
+<p>When an action requires a list of strings as the value of a parameter, the
+value can be sent by giving the parameter multiple times in the URL:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/term_translation_show?terms=russian&amp;terms=romantic%20novel">http://demo.ckan.org/api/3/action/term_translation_show?terms=russian&amp;terms=romantic%20novel</a></p>
+</div>
+<div class="section" id="jsonp-support">
+<h2>JSONP support<a class="headerlink" href="#jsonp-support" title="Permalink to this headline">¶</a></h2>
+<p>To cater for scripts from other sites that wish to access the API, the data can
+be returned in JSONP format, where the JSON data is &#8216;padded&#8217; with a function
+call. The function is named in the &#8216;callback&#8217; parameter. For example:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/3/action/package_show?id=adur_district_spending&amp;callback=myfunction">http://demo.ckan.org/api/3/action/package_show?id=adur_district_spending&amp;callback=myfunction</a></p>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">This doesn&#8217;t work with all functions.</p>
+</div>
+</div>
+<div class="section" id="api-examples">
+<span id="id1"></span><h2>API Examples<a class="headerlink" href="#api-examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tags-not-in-a-vocabulary">
+<h3>Tags (not in a vocabulary)<a class="headerlink" href="#tags-not-in-a-vocabulary" title="Permalink to this headline">¶</a></h3>
+<p>A list of all tags:</p>
+<ul class="simple">
+<li>browser: <a class="reference external" href="http://demo.ckan.org/api/3/action/tag_list">http://demo.ckan.org/api/3/action/tag_list</a></li>
+<li>curl: <tt class="docutils literal"><span class="pre">curl</span> <span class="pre">http://demo.ckan.org/api/3/action/tag_list</span></tt></li>
+<li>ckanapi: <tt class="docutils literal"><span class="pre">ckanapi</span> <span class="pre">-r</span> <span class="pre">http://demo.ckan.org</span> <span class="pre">action</span> <span class="pre">tag_list</span></tt></li>
+</ul>
+<p>Top 10 tags used by datasets:</p>
+<ul class="simple">
+<li>browser: <a class="reference external" href="http://demo.ckan.org/api/action/package_search?facet.field=[%22tags%22]&amp;facet.limit=10&amp;rows=0">http://demo.ckan.org/api/action/package_search?facet.field=[%22tags%22]&amp;facet.limit=10&amp;rows=0</a></li>
+<li>curl: <tt class="docutils literal"><span class="pre">curl</span> <span class="pre">'http://demo.ckan.org/api/action/package_search?facet.field=\[&quot;tags&quot;\]&amp;facet.limit=10&amp;rows=0'</span></tt></li>
+<li>ckanapi: <tt class="docutils literal"><span class="pre">ckanapi</span> <span class="pre">-r</span> <span class="pre">http://demo.ckan.org</span> <span class="pre">action</span> <span class="pre">package_search</span> <span class="pre">facet.field='[&quot;tags&quot;]'</span> <span class="pre">facet.limit=10</span> <span class="pre">rows=0</span></tt></li>
+</ul>
+<p>All datasets that have tag &#8216;economy&#8217;:</p>
+<ul class="simple">
+<li>browser: <a class="reference external" href="http://demo.ckan.org/api/3/action/package_search?fq=tags:economy">http://demo.ckan.org/api/3/action/package_search?fq=tags:economy</a></li>
+<li>curl: <tt class="docutils literal"><span class="pre">curl</span> <span class="pre">'http://demo.ckan.org/api/3/action/package_search?fq=tags:economy'</span></tt></li>
+<li>ckanapi: <tt class="docutils literal"><span class="pre">ckanapi</span> <span class="pre">-r</span> <span class="pre">http://demo.ckan.org</span> <span class="pre">action</span> <span class="pre">package_search</span> <span class="pre">fq='tags:economy'</span></tt></li>
+</ul>
+</div>
+<div class="section" id="tag-vocabularies">
+<h3>Tag Vocabularies<a class="headerlink" href="#tag-vocabularies" title="Permalink to this headline">¶</a></h3>
+<p>Top 10 tags and vocabulary tags used by datasets:</p>
+<ul class="simple">
+<li>browser: <a class="reference external" href="http://demo.ckan.org/api/action/package_search?facet.field=[%22tags%22]&amp;facet.limit=10&amp;rows=0">http://demo.ckan.org/api/action/package_search?facet.field=[%22tags%22]&amp;facet.limit=10&amp;rows=0</a></li>
+<li>curl: <tt class="docutils literal"><span class="pre">curl</span> <span class="pre">'http://demo.ckan.org/api/action/package_search?facet.field=\[&quot;tags&quot;\]&amp;facet.limit=10&amp;rows=0'</span></tt></li>
+<li>ckanapi: <tt class="docutils literal"><span class="pre">ckanapi</span> <span class="pre">-r</span> <span class="pre">http://demo.ckan.org</span> <span class="pre">action</span> <span class="pre">package_search</span> <span class="pre">facet.field='[&quot;tags&quot;]'</span> <span class="pre">facet.limit=10</span> <span class="pre">rows=0</span></tt></li>
+</ul>
+<p>e.g. Facet: <cite>vocab_Topics</cite> means there is a vocabulary called Topics, and its top tags are listed under it.</p>
+<p>A list of datasets using tag &#8216;education&#8217; from vocabulary &#8216;Topics&#8217;:</p>
+<ul class="simple">
+<li>browser: <a class="reference external" href="https://data.hdx.rwlabs.org/api/3/action/package_search?fq=vocab_Topics:education">https://data.hdx.rwlabs.org/api/3/action/package_search?fq=vocab_Topics:education</a></li>
+<li>curl: <tt class="docutils literal"><span class="pre">curl</span> <span class="pre">'https://data.hdx.rwlabs.org/api/3/action/package_search?fq=vocab_Topics:education'</span></tt></li>
+<li>ckanapi: <tt class="docutils literal"><span class="pre">ckanapi</span> <span class="pre">-r</span> <span class="pre">https://data.hdx.rwlabs.org</span> <span class="pre">action</span> <span class="pre">package_search</span> <span class="pre">fq='vocab_Topics:education'</span></tt></li>
+</ul>
+</div>
+<div class="section" id="uploading-a-new-version-of-a-resource-file">
+<h3>Uploading a new version of a resource file<a class="headerlink" href="#uploading-a-new-version-of-a-resource-file" title="Permalink to this headline">¶</a></h3>
+<p>You can use the <tt class="docutils literal"><span class="pre">upload</span></tt> parameter of the
+<tt class="xref py py-func docutils literal"><span class="pre">resource_update()</span></tt> function to upload a
+new version of a resource file. This requires a <tt class="docutils literal"><span class="pre">multipart/form-data</span></tt>
+request, with httpie you can do this using the <tt class="docutils literal"><span class="pre">&#64;file.csv</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>http --json POST http://demo.ckan.org/api/3/action/resource_update id=&lt;resource id&gt; upload=@updated_file.csv Authorization:&lt;api key&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="action-api-reference">
+<span id="api-reference"></span><h2>Action API reference<a class="headerlink" href="#action-api-reference" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you call one of the action functions listed below and the function
+raises an exception, the API will return a JSON dictionary with keys
+<tt class="docutils literal"><span class="pre">&quot;success&quot;:</span> <span class="pre">false</span></tt> and and an <tt class="docutils literal"><span class="pre">&quot;error&quot;</span></tt> key indicating the exception
+that was raised.</p>
+<p>For example <tt class="xref py py-func docutils literal"><span class="pre">member_list()</span></tt> (which returns a
+list of the members of a group) raises <tt class="xref py py-class docutils literal"><span class="pre">NotFound</span></tt> if
+the group doesn&#8217;t exist. If you called it over the API, you&#8217;d get back a
+JSON dict like this:</p>
+<div class="last highlight-python"><div class="highlight"><pre>{
+    &quot;success&quot;: false
+    &quot;error&quot;: {
+        &quot;__type&quot;: &quot;Not Found Error&quot;,
+        &quot;message&quot;: &quot;Not found&quot;
+    },
+    &quot;help&quot;: &quot;...&quot;,
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-ckanext.dataextractor.logic.action.get">
+<span id="ckanext-dataextractor-logic-action-get"></span><h3>ckanext.dataextractor.logic.action.get<a class="headerlink" href="#module-ckanext.dataextractor.logic.action.get" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="ckanext.dataextractor.logic.action.get.resource_filters">
+<tt class="descclassname">ckanext.dataextractor.logic.action.get.</tt><tt class="descname">resource_filters</tt><big>(</big><em>context</em>, <em>data_dict</em><big>)</big><a class="headerlink" href="#ckanext.dataextractor.logic.action.get.resource_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch all available filters for a given resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource_id</strong> (<em>string</em>) &#8211; id of the resource.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">available filters for the resource</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of dictionaries</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckanext.dataextractor.logic.action.get.active_resource_filters">
+<tt class="descclassname">ckanext.dataextractor.logic.action.get.</tt><tt class="descname">active_resource_filters</tt><big>(</big><em>context</em>, <em>data_dict</em><big>)</big><a class="headerlink" href="#ckanext.dataextractor.logic.action.get.active_resource_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch all active filters for a given resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>resource_id</strong> (<em>string</em>) &#8211; id of the resource.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">available filters for the resource</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of dictionaries</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckanext.dataextractor.logic.action.get.datastore_resource_search">
+<tt class="descclassname">ckanext.dataextractor.logic.action.get.</tt><tt class="descname">datastore_resource_search</tt><big>(</big><em>context</em>, <em>data_dict</em><big>)</big><a class="headerlink" href="#ckanext.dataextractor.logic.action.get.datastore_resource_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search through the DataStore for a given resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource_id</strong> (<em>string</em>) &#8211; id of the resource that you want to search against.</li>
+<li><strong>filters</strong> (<em>string</em>) &#8211; List of filter objects to apply i.e. [{&#8220;name&#8221;: &#8220;Dato og tid&#8221;, &#8220;operator&#8221;: &#8220;&lt;=&#8221;, &#8220;value&#8221;: &#8220;2017-03-03&#8221;}, ...] (optional).</li>
+<li><strong>sort</strong> (<em>string</em>) &#8211; Sort criteria i.e. Column Name, ASC (optional).</li>
+<li><strong>limit</strong> (<em>integer</em>) &#8211; Limit the search criteria (defaults to 100).</li>
+<li><strong>offset</strong> (<em>integer</em>) &#8211; Offset for the search criteria (defaults to 0).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For more information refer to the <a class="reference external" href="http://docs.ckan.org/en/latest/maintaining/datastore.html#ckanext.datastore.logic.action.datastore_search/">DataStore Search API Documentation</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">json</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ckanext.dataextractor.logic.action.create">
+<span id="ckanext-dataextractor-logic-action-create"></span><h3>ckanext.dataextractor.logic.action.create<a class="headerlink" href="#module-ckanext.dataextractor.logic.action.create" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="ckanext.dataextractor.logic.action.create.resource_filters_create">
+<tt class="descclassname">ckanext.dataextractor.logic.action.create.</tt><tt class="descname">resource_filters_create</tt><big>(</big><em>context</em>, <em>data_dict</em><big>)</big><a class="headerlink" href="#ckanext.dataextractor.logic.action.create.resource_filters_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create custom extract filters for a given resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource_id</strong> (<em>string</em>) &#8211; id of the resource that filters should be added to.</li>
+<li><strong>filters</strong> (<em>list of strings</em>) &#8211; filters i.e. [&#8216;electricity&#8217;, &#8216;date&#8217;]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the newly created resource</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckanext.dataextractor.logic.action.create.azure_blob_create">
+<tt class="descclassname">ckanext.dataextractor.logic.action.create.</tt><tt class="descname">azure_blob_create</tt><big>(</big><em>context</em>, <em>data_dict</em><big>)</big><a class="headerlink" href="#ckanext.dataextractor.logic.action.create.azure_blob_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create file in specified format and upload it to azure blob storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource_id</strong> (<em>string</em>) &#8211; </li>
+<li><strong>filters</strong> (<em>list</em>) &#8211; list of applied filters</li>
+<li><strong>sort</strong> &#8211; sort criteria</li>
+<li><strong>format</strong> (<em>string</em>) &#8211; format of the file that will be created. i.e. &#8216;csv&#8217;, &#8216;tsv&#8217;, &#8216;json&#8217;, &#8216;xml&#8217;, &#8216;xlsx&#8217;</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">azure blob storage url to the created file.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">string</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ckanext.dataextractor.logic.action.update">
+<span id="ckanext-dataextractor-logic-action-update"></span><h3>ckanext.dataextractor.logic.action.update<a class="headerlink" href="#module-ckanext.dataextractor.logic.action.update" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="ckanext-dataextractor-logic-action-patch">
+<h3>ckanext.dataextractor.logic.action.patch<a class="headerlink" href="#ckanext-dataextractor-logic-action-patch" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3.</span></p>
+</div>
+<span class="target" id="module-ckanext.dataextractor.logic.action.patch"></span></div>
+<div class="section" id="module-ckanext.dataextractor.logic.action.delete">
+<span id="ckanext-dataextractor-logic-action-delete"></span><h3>ckanext.dataextractor.logic.action.delete<a class="headerlink" href="#module-ckanext.dataextractor.logic.action.delete" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="ckanext.dataextractor.logic.action.delete.resource_filters_delete">
+<tt class="descclassname">ckanext.dataextractor.logic.action.delete.</tt><tt class="descname">resource_filters_delete</tt><big>(</big><em>context</em>, <em>data_dict</em><big>)</big><a class="headerlink" href="#ckanext.dataextractor.logic.action.delete.resource_filters_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete extract filters for a given resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>resource_id</strong> (<em>string</em>) &#8211; id of the resource that filters should be deleted from.</li>
+<li><strong>filters</strong> (<em>list</em>) &#8211; list of filters i.e. [&#8216;electricity&#8217;, &#8216;date&#8217;]</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">resource object</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dictionary</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="ckanext.dataextractor.logic.action.delete.azure_blobs_delete">
+<tt class="descclassname">ckanext.dataextractor.logic.action.delete.</tt><tt class="descname">azure_blobs_delete</tt><big>(</big><em>context</em>, <em>data_dict</em><big>)</big><a class="headerlink" href="#ckanext.dataextractor.logic.action.delete.azure_blobs_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete all existing blobs on azure older than configured time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">number of deleted blobs</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">integer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation"
+         aria-label="footer navigation">
+      
+        <a href="legacy-api.html" class="btn btn-neutral float-right"
+           title="Legacy APIs"/>
+           Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../contents.html" class="btn btn-neutral"
+           title="Full table of contents">
+           <span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr></hr>
+
+  <p>An <a href="http://okfn.org">Open Knowledge Foundation</a> project.</p>
+
+  <p class="copyright">
+      &copy; 2009-2013, <a href="http://okfn.org/">Open Knowledge Foundation</a>.
+    Licensed under <a
+    href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons
+    Attribution ShareAlike (Unported) v3.0 License</a>.<br />
+    <img src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" alt="CC License Logo" />
+    <a href="http://opendefinition.org/"><img src="http://assets.okfn.org/images/ok_buttons/oc_80x15_blue.png" border="0"
+      alt="{{ _('Open Content') }}" /></a>
+  
+  </p>
+
+  <p>
+    <a href="https://github.com/ckan/ckan">Source</a>
+    &mdash;
+    <a href="https://github.com/ckan/ckan/issues">Issues</a>
+    &mdash;
+    <a href="http://lists.okfn.org/mailman/listinfo/ckan-dev">Mailing List</a>
+    &mdash;
+    <a href="http://twitter.com/CKANProject">Twitter @CKANProject</a>
+  </p>
+
+  <p>
+    Related Projects:
+    <a href="http://thedatahub.org/">The DataHub</a>
+    &mdash;
+    <a href="http://datacatalogs.org">DataCatalogs.org</a>
+    &mdash;
+    <a href="http://openspending.org">OpenSpending.org</a>
+    &mdash;
+    <a href="http://opendatahandbook.org">Open Data Handbook</a>
+  </p>
+
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a>  provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.5.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

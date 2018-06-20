@@ -1,0 +1,46 @@
+{% ckan_extends %}
+
+{% block breadcrumb_content %}
+  {% if pkg %}
+    {% set dataset = h.dataset_display_name(pkg) %}
+    {% if pkg.organization %}
+      {% set organization = h.get_translated(pkg.organization, 'title') or pkg.organization.name %}
+      <li>{% link_for _('Organizations'), controller='organization', action='index' %}</li>
+      <li>{% link_for organization|truncate(30), controller='organization', action='read', id=pkg.organization.name %}</li>
+    {% else %}
+      <li>{% link_for _('Datasets'), controller='package', action='search' %}</li>
+    {% endif %}
+    <li{{ self.breadcrumb_content_selected() }}>{% link_for dataset|truncate(30), controller='package', action='read', id=pkg.name %}</li>
+  {% else %}
+    <li>{% link_for _('Datasets'), controller='package', action='search' %}</li>
+    <li class="active"><a href="">{{ _('Create Dataset') }}</a></li>
+  {% endif %}
+  {% if res %}
+    {% set can_edit = h.check_access('package_update', {'id': pkg.name }) %}
+    {% set url_action = 'resource_read' if can_edit == 'True' else 'resource_extractor_show' %}
+    {% set ctrl = 'package' if can_edit == 'True' else 'ckanext.dataextractor.controllers.dataextractor:DataextractorController' %}
+    <li>{% link_for h.resource_display_name(res)|truncate(30), controller=ctrl, action=url_action, id=pkg.name, resource_id=res.id %}</li>
+    <li{% block breadcrumb_edit_selected %} class="active"{% endblock %}><a href="">{{ _('Edit') }}</a></li>
+  {% endif %}
+{% endblock %}
+
+
+
+{% block content_action %}
+  {% link_for _('All resources'), controller='package', action='resources', id=pkg.name, class_='btn btn-default', icon='arrow-left' %}
+  {% if res %}
+
+    {% set can_edit = h.check_access('package_update', {'id': pkg.name }) %}
+    {% set url_action = 'resource_read' if can_edit == 'True' else 'resource_extractor_show' %}
+    {% set ctrl = 'package' if can_edit == 'True' else 'ckanext.dataextractor.controllers.dataextractor:DataextractorController' %}
+
+    {% link_for _('View resource'), controller=ctrl, action=url_action, id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='eye' %}
+  {% endif %}
+{% endblock %}
+
+{% block content_primary_nav %}
+{{super()}}
+  {% if 'dataextractor' in g.plugins %}
+    {{ h.build_nav_icon('resource_filters_edit', _('Resource Filters'), name=pkg.name, resource_id=res.id) }}
+  {% endif %}
+{% endblock %}

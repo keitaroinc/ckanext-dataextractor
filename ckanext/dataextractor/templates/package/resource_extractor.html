@@ -1,0 +1,247 @@
+{% resource 'dataextractor/datetimepicker' %}
+{% extends "package/resource_read.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="/css/data-explorer.css">
+<link rel="stylesheet" href="/css/timepicker.css">
+<link rel="stylesheet" href="/css/jquery-ui.min.css">
+{% endblock %}
+
+{% set fields = c.resource_data.fields %}
+{% set records = c.resource_data.records %}
+{% set active_filters = c.active_resource_filters %}
+{% set controller = 'ckanext.dataextractor.controllers.dataextractor:DataextractorController' %}
+
+{% block resource_content %}
+{% block resource_read_title %}
+{{super()}}
+{% endblock %}
+{% endblock %}
+
+{% block data_preview %}
+{% set no_filters_message = _('No data filters are assigned to this Data Explorer view yet. You are viewing an unfiltered version of the complete resource data.') %}
+
+<div class="data-explorer">
+    <div class="panel panel-default data-explorer-filters {% if c.applied_filters %}{% else %}hidden{%endif%}">
+        <div class="panel-heading">
+            <button class="pull-right btn btn-sm btn-default data-explorer-filters-toggle"><span class="fa fa-times"></span></button>
+            <h2 class="panel-title"><span class="fa fa-tasks"></span><span class="fa-label">{{_('Data Explorer Filters')}}</span></h2>
+        </div>
+        <div class="panel-body">
+            <div class="data-explorer-no-filters {% if c.applied_filters %}hidden{% endif %}">{{no_filters_message}}</div>
+            <form name="filter-inputs" method="post">
+                <p class="{% if c.applied_filters %}{% else %} hidden {%endif%} filter-list data-explorer-active-filters">
+                {% if c.applied_filters %}
+                    {% for f in c.applied_filters %}
+                    <span class="filtered pill">
+                <span class="data-filter-column-value">{{f['name']}}</span>
+                <span class="data-filter-operator">{{f['operator']}}</span>
+                <span class="data-filter-value">{{f['value']}}</span>
+                <input type="hidden" name="applied-filters" value="{{f['filter_string']}}">
+                <a href="#" class="data-filter-edit"><span class="fa fa-pencil"></span></a>
+                <a href="#" class="data-filter-remove"><span class="fa fa-times"></span></a>
+            </span>
+                    {% endfor %}
+                {% endif %}
+                </p>
+                {% if c.sort_criteria %}
+                <input type="hidden" name="sort" value="{{c.sort_criteria}}" />
+                {% endif %}
+            </form>
+            <div class="hidden data-explorer-filter-create">
+                <form class="form-inline">
+                    <div id="resource-filters-inputs"></div>
+                    <div class="form-group">
+                        <select class="form-control data-filter-column-select" id="data-filter-column-select-id" required="required">
+                            {% if active_filters %}
+                                {% for filter in active_filters %}
+                                    {% if filter.type == 'timestamptz' %}
+                                        {% set type = filter.type|truncate(9, True, '') %}
+                                    {% else %}
+                                        {% set type = filter.type %}
+                                    {% endif %}
+                                    <option value="{{ filter.name }}" class="filter-type-{{type}}">{{ filter.name }}</option>
+                                {% endfor %}
+                            {% else %}
+                                <option value="">{{_('No filters available')}}</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="form-group data-filter-interval-toggle">
+                        <input name="data-filter-interval-toggle" id="data-filter-interval-toggle" type="checkbox">
+                        <label for="data-filter-interval-toggle" class="btn btn-default btn-interval"><span class="fa fa-arrows-h"></span><span class="fa-label">{{_('Interval')}}</span></label>
+                    </div>
+                    <div class="data-filter-interval-fields hidden">
+                        <div class="form-group">
+                            <select id="data-filter-input-type" class="form-control">
+                                <option select="selected" value="BETWEEN">{{_('Between')}}</option>
+                                <option value="NOT BETWEEN">{{_('Not between')}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control data-filter-input-value-start" placeholder="eg. 50">
+                        </div>
+                    </div>
+                    <div class="data-explorer-filter-operators">
+                        <div class="form-group">
+                            <input name="data-filter-operator" id="data-filter-operator-eq" value="=" required type="radio">
+                            <label for="data-filter-operator-eq" class="btn btn-default">=</label>
+                        </div>
+                        <div class="form-group">
+                            <input name="data-filter-operator" id="data-filter-operator-neq" value="!=" required type="radio">
+                            <label for="data-filter-operator-neq" class="btn btn-default">!=</label>
+                        </div>
+                        <div class="form-group">
+                            <input name="data-filter-operator" id="data-filter-operator-lt" value="<" required type="radio">
+                            <label for="data-filter-operator-lt" class="btn btn-default">&lt;</label>
+                        </div>
+                        <div class="form-group">
+                            <input name="data-filter-operator" id="data-filter-operator-gt" value=">" required type="radio">
+                            <label for="data-filter-operator-gt" class="btn btn-default">&gt;</label>
+                        </div>
+                        <div class="form-group">
+                            <input name="data-filter-operator" id="data-filter-operator-lt-eq" value="<=" required type="radio">
+                            <label for="data-filter-operator-lt-eq" class="btn btn-default">&lt;=</label>
+                        </div>
+                        <div class="form-group">
+                            <input name="data-filter-operator" id="data-filter-operator-gt-eq" value=">=" required type="radio">
+                            <label for="data-filter-operator-gt-eq" class="btn btn-default">&gt;=</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control data-filter-input-value" required="required" placeholder="eg. 100">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-info btn-save-filter">{{_('Save')}}</button>
+                        <button type="submit" class="btn btn-info btn-edit-filter hidden">{{_('Save')}}</button>
+                        <button type="button" class="btn btn-default btn-edit-filter-cancel hidden">{{_('Cancel')}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel-footer">
+            <ul class="data-explorer-controls list-inline">
+                <li><button class="btn btn-default btn-create-filter">{{_('Create')}}</button></li>
+                <li><button class="btn btn-success btn-apply-filter hidden">{{_('Apply')}}</button></li>
+                <li class="pull-right"><button class="btn btn-danger btn-reset-filter hidden">{{_('Reset')}}</button></li>
+            </ul>
+        </div>
+    </div>
+    {% if c.total == 0 %}
+    {% if c.applied_filters %}
+    {% set msg = _('No data found matching your search criteria.') %}
+    {% else %}
+    {% set msg = _('The DataStore for this resource does not contain any data.') %}
+    {% endif %}
+    <p class="alert alert-warning">{{msg}}</p>
+    {% else%}
+    <p class="lead">{{_('Total number of rows:')}} <strong class="total-results">{{'{0:,}'.format(c.total)}}</strong></p>
+    <hr>
+    <div class="table-responsive" id="resource-preview">
+        <table class="table table-resource-preview">
+            <colgroup>
+                {% if fields %}
+                  {% if (fields[0]['type'] == 'timestamp' or fields[0]['type'] == 'timestamptz') and (fields[1]['type'] == 'timestamp' or fields[1]['type'] == 'timestamptz') %}
+                    <col class="col-md-2">
+                    <col class="col-md-2">
+                  {% else %}
+                    <col class="col-md-2">
+                  {% endif %}
+                {% endif %}
+            </colgroup>
+            <thead>
+            <tr>
+                {% if fields and records %}
+                {% for field in fields %}
+                <th {% if records[0][field.id] is number or records[0][field.id] is none %} class="text-right" {% endif %}>{% if field.id in c.sort_fields %}
+                    <button title="{{_('Sort by ' + field.id)}}" class="data-sort-btn {% if c.sort_criteria and h.startswith(c.sort_criteria, field.id) %}active{% endif %}" data-sort-name="{{field.id}}">
+                        {{h.capitalize_string(field.id)}}
+                        <span class="fa
+                        {% if c.sort_criteria and h.startswith(c.sort_criteria, field.id) %}
+                        {% if h.endswith(c.sort_criteria, 'asc') %} fa-sort-asc
+                        {% elif h.endswith(c.sort_criteria, 'desc') %} fa-sort-desc
+                        {% else %} fa-sort {% endif %} {% else %} fa-sort{% endif %}">
+                        </span>
+                    </button>
+                    {%else%}
+                      {{h.capitalize_string(field.id)}}
+                    {%endif%}
+                </th>
+                {% endfor %}
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% if records %}
+            {% for record in records %}
+            <tr>
+                {% for key, value in record.iteritems() %}
+
+                {% if value is number %}
+                  {% set size = h.get_metadata_attr_field_for_column(key, 'size', c.resource_attr)|string %}
+                  {% set decimal = size.split('.')[1] %}
+                  {% if decimal %}
+                    {% set regex = '{0:,.' + decimal|string + 'f}' %}
+                    {% set v = regex.format(value) %}
+                  {% else %}
+                    {% set v = value %}
+                  {% endif %}
+                {% else %}
+                  {% set v = value %}
+                {% endif %}
+
+                <td {% if value is number or value is none %} class="text-right" {% endif %}>{{ v }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    {{h.snippet('snippets/pagination.html', current=c.page, per_page=c.limit, total=c.total, pkg_name=c.id, resource_id=c.resource_id)}}
+    {% endif %}
+    <div id="current_resource_id" resource_id="{{ c.resource_id }}"></div>
+
+    {% snippet 'package/snippets/api_info.html', datastore_root_url=c.datastore_api, resource_id=c.resource_id %}
+
+    <!-- Download CSV modal -->
+    <div class="modal fade" id="download_csv" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-uppercase">{{_('Download CSV')}}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        {% trans %}
+                        Please mark a delimiter for the data you're about to download and click Download CSV.
+                        {% endtrans %}
+                    </p>
+                    <ul class="list-inline">
+                        <li>
+                            <button type="button" delimiter="comma" class="btn btn-info delimiter-button">{{_('Comma')}}</button>
+                        </li>
+                        <li>
+                            <button type="button" delimiter="semicolon" class="btn btn-info delimiter-button">{{_('Semicolon')}}</button>
+                        </li>
+                        <li>
+                            <button type="button" delimiter="pipe" class="btn btn-info delimiter-button">{{_('Pipe')}}</button>
+                        </li>
+                        <li>
+                            <button type="button" delimiter="tab" class="btn btn-info delimiter-button">{{_('Tab')}}</button>
+                        </li>
+                    </ul>
+                    <input type="hidden" id="csv_delimiter" value="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{_('Close')}}</button>
+                    <button type="button" data-format="csv" class="btn btn-primary data-extract-btn">{{_('Download CSV')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% ckan_extends %}
+{% block resource_actions_inner %}
+{% if 'dataextractor' in g.plugins and h.has_datastore_record(c.resource['id']) and c.action == 'resource_extractor_show' %}
+<li>
+  <button class="data-explorer-filters-toggle btn btn-primary">
+    <span class="fa fa-filter"></span>
+    <span class="fa-label">{{_('Filter & Extract')}}</span>
+  </button>
+</li>
+<li>
+  <div class="btn-group data-explorer-download">
+    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="fa fa-download"></span><span class="fa-label">{{_('Download')}}</span>&nbsp;<span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li>
+        <a class="data-extract-btn" data-format="json">{{_('JSON')}}</a>
+      </li>
+      <li>
+        <a class="" data-format="csv" data-toggle="modal" data-target="#download_csv">{{_('CSV')}}...</a>
+      </li>
+      <li>
+        <a class="data-extract-btn" data-format="xlsx">{{_('XLSX')}}</a>
+      </li>
+      <li>
+        <a class="data-extract-btn" data-format="xml">{{_('XML')}}</a>
+      </li>
+      <li role="separator" class="divider"></li>
+      <li class="dropdown-menu-notice">
+        <span class="fa fa-info-circle"></span>
+        {% set search_limit_message = _('Downloads are limited to the most recent {search_limit} rows').format(search_limit=h.eds_search_limit()) %}
+        <span class="fa-label">{{search_limit_message}}</span>
+        </li>
+    </ul>
+  </div>
+</li>
+{%endif%}
+
+<li>
+  <a class="btn btn-info" href="#metadata-info">
+    <span class="fa fa-file-text"></span><span class="fa-label">{{_('Metadata')}}</span>
+  </a>
+</li>
+
+{% if c.action=='resource_extractor_show' %}
+{% if h.check_access('package_update', {'id':pkg.id }) %}
+<li>{% link_for _('Manage'), controller='package', action='resource_edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
+{% endif %}
+
+{% if 'datastore' in g.plugins %}
+<li>
+  <button class="btn btn-success" data-toggle="modal" data-target="#data-api-info"><i class="fa fa-flask icon-large"></i> {{ _('Data API') }}</button>
+</li>
+{% endif %}
+
+{% else %}
+{{ super() }}
+{% endif %}
+{% endblock %}
+
+{% block resource_additional_information_inner %}
+<a id="metadata-info"></a>
+{% endblock %}

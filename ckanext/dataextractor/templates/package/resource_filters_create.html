@@ -1,0 +1,62 @@
+{% resource 'dataextractor/resource-filters.js' %}
+{% extends "package/resource_filters_base.html" %}
+
+{% block primary_content_inner %}
+{% set edit_url = h.url_for('resource_filters_edit', name=pkg.name, resource_id=res.id) %}
+{% set create_url = h.url_for('resource_filters_create', name=pkg.name, resource_id=res.id) %}
+<h1 class="h3">{% block form_title %}{{ _('Available Resource Filters') }}{% endblock %}</h1>
+{% block form %}{% endblock %}
+<form id="resource-filters-create" class="dataset-form dataset-resource-form " method="post" action="{{create_url}}" enctype="multipart/form-data">
+  <div class="module-content">
+    <div class="page_primary_action">
+      {% if available_filters %}
+      <table class="table">
+        <colgroup>
+          <col class="col-md-1">
+          <col class="col-md-7">
+          <col class="col-md-4">
+        </colgroup>
+        <thead>
+        <tr>
+          <th>
+            <div class="ui-toggle">
+              <input class="mark-all" type="checkbox" id="mark_all_resource_filters">
+              <label class="ui-toggle-icon" for="mark_all_resource_filters"></label>
+            </div>
+          </th>
+          <th>{{_('Filter Name')}}</th>
+          <th>{{_('Filter Type')}}</th>
+        </tr>
+        </thead>
+        <colgroup>
+          <col class="col-md-1">
+          <col class="col-md-6">
+          <col class="col-md-5">
+        </colgroup>
+        <tbody>
+        {% for _f in available_filters %}
+        <tr>
+          <td>
+            <div class="ui-toggle">
+              <input name="filters" id="{{_f.name}}" value="{{_f.name}}" type="checkbox">
+              <label class="ui-toggle-icon" for="{{_f.name}}"></label>
+            </div>
+          </td>
+          <td scope="row"><label for="{{_f.name}}">{{_f.name}}</label></td>
+          <td>{{_f.type}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <div class="form-actions">
+        <button class="btn btn-danger pull-left" type="reset">{{_('Reset')}}</button>
+        <button class="btn btn-primary" type="submit">{{_('Add')}}</button>
+      </div>
+      {% else %}
+      <p class="alert alert-warning">{{_('All available resource filters have already been added.')}}</p>
+      <a class="btn btn-default" href="{{edit_url}}">{{_('Edit')}}</a>
+      {% endif %}
+    </div>
+  </div>
+</form>
+{% endblock %}

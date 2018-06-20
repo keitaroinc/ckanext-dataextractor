@@ -1,0 +1,247 @@
+{
+    "resource": {
+        "package_id": "test-data",
+        "name": "Test",
+        "validation": "0"
+    },
+    "fields": [{
+            "type": "timestamp",
+            "id": "Hour",
+            "name_of_field": "Hour",
+            "unit": "time",
+            "size": "17",
+            "comment": "00:00 o’clock is the first hour of a given day interval 00:00 - 00:59 and 01:00 covers the second hour (interval) of the day and so forth",
+            "attribute_description": "A date and time (interval) where the prices are valid",
+            "validation_rules": "Always full hours, i.e. minutes are 00",
+            "name_of_attribute": "Hour",
+            "example": "2012-10-01T02:00Z"
+
+        },
+        {
+            "type": "text",
+            "id": "PriceArea",
+            "name_of_field": "PriceArea",
+            "size": "3",
+            "unit": "text",
+            "comment": "DK1 and DK2 is the standard abbreviation for the two Danish price areas",
+            "attribute_description": "A date and time (interval) where the prices are valid",
+            "validation_rules": "DK1 or DK2",
+            "format_regex": "DK1 | DK2",
+            "name_of_attribute": "Price area",
+            "example": "DK1"
+
+        },
+        {
+            "type": "text",
+            "id": "ConnectedArea",
+            "name_of_field": "ConnectedArea",
+            "size": "8",
+            "unit": "text",
+            "comment": "DK1 is the Jutland and Fyen and DK2 is Zealand and islands. DK1 is connected to Norway (Oslo), Sweden (SE3) and Germany (EPEX) DK2 to Sweden (SE4) and Germany (EPEX)",
+            "attribute_description": "The destination area of the connection.",
+            "validation_rules": "DK1, DK2. SE3, SE4, Oslo, EPEX",
+            "format_regex": "DK1 | DK2 | SE3 | SE4 | Oslo | EPEX",
+            "name_of_attribute": "Connected area",
+            "example": "DK1"
+
+        },
+        {
+            "type": "float",
+            "id": "ImportCapacity",
+            "name_of_field": "ImportCapacity",
+            "unit": "MWh per hour",
+            "size": 9.2,
+            "comment": "",
+            "attribute_description": "Import capacity from connected area to the area. The TSOs decide how much import capacity is to be transferred, and the capacity for the coming day is published at Nord Pool Spot every day before 10:00.",
+            "validation_rules": ">=0",
+            "format_regex": "([0-9]*[,])[0-9][0-9]",
+            "name_of_attribute": "Import capacity",
+            "example": 300.0
+
+        },
+        {
+            "type": "float",
+            "id": "ExportCapacity",
+            "name_of_field": "ExportCapacity",
+            "name_of_attribute": "Export capacity",
+            "unit": "MWh per hour",
+            "size": 9.2,
+            "comment": "",
+            "attribute_description": "Export capacity from area to the connected area. The TSOs decide how much export capacity is to be transferred, and the capacity for the coming day is published at Nord Pool Spot every day before 10:00.",
+            "validation_rules": "",
+            "format_regex": "",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "ScheduledExchange",
+            "name_of_field": "ScheduledExchange",
+            "unit": "MWh per hour",
+            "size": 9.2,
+            "comment": "Positive values are import from connected area to the area. Negative values are eksport from area to connected area.",
+            "attribute_description": "Scheduled exchange on the transmission lines is the flow of electricity from areas of surplus to areas of deficit resulting from the Nord Pool Spots price calculation",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Scheduled exchange",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "PhysicalExchange",
+            "name_of_field": "PhysicalExchange",
+            "unit": "MWh per hour",
+            "size": 9.2,
+            "comment": "Positive values are import from connected area to the area. Negative values are eksport from area to connected area.",
+            "attribute_description": "Physical exchange on the transmission lines is the actual flow of electricity.",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Physical exchange",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "CongestionIncomeDKK",
+            "name_of_field": "CongestionIncomeDKK",
+            "unit": "DKK per hour",
+            "size": 9.2,
+            "comment": "Congestion income is calculated as the difference in spot prices between the two price areas multiplied by the estimated exchange between the two areas concerned.",
+            "attribute_description": "Congestion income from connection between price areas.",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Congestion income DKK",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "CongestionIncomeEUR",
+            "name_of_field": "CongestionIncomeEUR",
+            "unit": "EUR per hour",
+            "size": 9.2,
+            "comment": "Congestion income is calculated as the difference in spot prices between the two price areas multiplied by the estimated exchange between the two areas concerned.",
+            "attribute_description": "Congestion income from connection between price areas.",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Congestion income EUR",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "HomePriceDKK",
+            "name_of_field": "HomePriceDKK",
+            "unit": "float",
+            "size": 9.2,
+            "comment": "",
+            "attribute_description": "Price in the home price area",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Home price DKK",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "HomePriceEUR",
+            "name_of_field": "HomePriceEUR",
+            "unit": "EUR per hour",
+            "size": 9.2,
+            "comment": "",
+            "attribute_description": "Price in the home price area",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Home price EUR",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "ConnectedPriceDKK",
+            "name_of_field": "ConnectedPriceDKK",
+            "unit": "DKK per hour",
+            "size": 9.2,
+            "comment": "",
+            "attribute_description": "Price in the connected area",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Connected price DKK",
+            "example": 300.00
+
+        },
+        {
+            "type": "float",
+            "id": "ConnectedPriceEUR",
+            "name_of_field": "ConnectedPriceEUR",
+            "unit": "EUR per hour",
+            "size": 9.2,
+            "comment": "",
+            "attribute_description": "Price in the connected area",
+            "validation_rules": "",
+            "format_regex": "",
+            "name_of_attribute": "Connected price EUR",
+            "example": 300.00
+
+        }
+    ],
+    "records": [{
+        "Hour": "2017-01-01 00:00:00",
+        "PriceArea": "DK1",
+        "ConnectedArea": "DK2",
+        "ImportCapacity": 600.0,
+        "ExportCapacity": 590.0,
+        "ScheduledExchange": 459.3,
+        "PhysicalExchange": 591.3,
+        "CongestionIncomeDKK": 2340.7,
+        "CongestionIncomeEUR": 442.4,
+        "HomePriceDKK": 155.82,
+        "HomePriceEUR": 20.96,
+        "ConnectedPriceDKK": 155.82,
+        "ConnectedPriceEUR": 20.96
+    },{
+        "Hour": "2017-01-01 01:00:00",
+        "PriceArea": "DK1",
+        "ConnectedArea": "DK2",
+        "ImportCapacity": 700.0,
+        "ExportCapacity": 590.0,
+        "ScheduledExchange": 459.3,
+        "PhysicalExchange": 591.3,
+        "CongestionIncomeDKK": 2340.7,
+        "CongestionIncomeEUR": 442.4,
+        "HomePriceDKK": 155.82,
+        "HomePriceEUR": 20.96,
+        "ConnectedPriceDKK": 155.82,
+        "ConnectedPriceEUR": 20.96
+    },{
+        "Hour": "2017-01-01 02:00:00",
+        "PriceArea": "DK1",
+        "ConnectedArea": "DK2",
+        "ImportCapacity": 500.0,
+        "ExportCapacity": 590.0,
+        "ScheduledExchange": 459.3,
+        "PhysicalExchange": 591.3,
+        "CongestionIncomeDKK": 2340.7,
+        "CongestionIncomeEUR": 442.4,
+        "HomePriceDKK": 155.82,
+        "HomePriceEUR": 20.96,
+        "ConnectedPriceDKK": 155.82,
+        "ConnectedPriceEUR": 20.96
+    },{
+        "Hour": "2017-01-01 03:00:00",
+        "PriceArea": "DK1",
+        "ConnectedArea": "DK2",
+        "ImportCapacity": 200.0,
+        "ExportCapacity": 590.0,
+        "ScheduledExchange": 459.3,
+        "PhysicalExchange": 591.3,
+        "CongestionIncomeDKK": 2340.7,
+        "CongestionIncomeEUR": 442.4,
+        "HomePriceDKK": 155.82,
+        "HomePriceEUR": 20.96,
+        "ConnectedPriceDKK": 155.82,
+        "ConnectedPriceEUR": 20.96
+    }],
+    "primary_key": "Hour,PriceArea,ConnectedArea"
+}

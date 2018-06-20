@@ -1,0 +1,255 @@
+/*
+* CKAN Data Explorer
+* version: 1.0
+* ==============================================================================
+*/
+
+// Global variables
+@bootstrap-less: "../../../../node_modules/bootstrap/less/";
+@data-explorer-filter-operator-color: #fff;
+@data-explorer-filter-operator-bg-default: #9d9c9c;
+@data-explorer-filter-operator-bg: #00A58D;
+@data-explorer-filter-create-top-border: lighten(@data-explorer-filter-operator-bg-default, 30%);
+@data-explorer-filter-operator-border-radius: 0;
+@data-explorer-edit-button-border: 1px solid fade(@data-explorer-filter-operator-color, 30%);
+// Bootstrap variables
+@grid-gutter-width: 30px;
+@brand-warning: orange;
+// Mixins
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+.data-filter-edit-active{
+    border-color: lighten(@brand-warning, 10%);
+    background-color: @brand-warning;    
+}
+
+.unselectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+// .data-sort-btn {
+//     .fa {
+//         &:not(.fa-label) {
+//             margin-right: 0;
+//         }
+//     }
+// }
+.fade-in-animation {
+    animation: 200ms fadeIn ease-in-out;
+}
+
+.auto-select {
+    cursor: pointer;
+}
+
+// Data Explorer
+.data-explorer {
+    .panel-title {
+        .text-uppercase;
+        .fa {
+            margin-right: @grid-gutter-width/5;
+        }
+    }
+    .table {
+        margin: @grid-gutter-width/2 0 @grid-gutter-width;
+    }
+    th {
+        vertical-align: middle;
+    }
+    /*td,
+    th {
+        &:not(:first-child) {
+            text-align: right;
+        }
+    }*/
+}
+
+.data-sort-btn {
+    background: transparent;
+    padding: 0;
+    outline: none;
+    border: none;
+    text-align: inherit;
+    position: relative;
+    color: inherit;
+    &.active {
+        color: #008A8B;
+        .fa {
+            color: inherit;
+        }
+    }
+    .fa {
+        color: #aaa;
+        display: block;
+        font-size: 10px;
+        margin-top: 5px;
+        padding: 5px;
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+// .data-sort-btn {
+//     margin-left: @grid-gutter-width/3;
+//     margin-right: @grid-gutter-width/12;
+// }
+.data-explorer-title {
+    .text-uppercase;
+    margin: @grid-gutter-width/3 0;
+}
+
+.data-explorer-filters {
+    margin-bottom: @grid-gutter-width;
+    .fade-in-animation;
+    .panel-title {
+        margin: @grid-gutter-width/4 0;
+    }
+}
+
+.dropdown-menu-notice{
+    opacity: 0.7;
+    padding: @grid-gutter-width/6 @grid-gutter-width/2;
+}
+
+.actions {
+    .data-explorer-download {
+        li {
+            display: block;
+        }
+        a {
+            cursor: pointer;
+        }
+    }
+}
+
+.btn-reset-filter,
+.btn-apply-filter {
+    .fade-in-animation;
+}
+
+.data-explorer-controls {
+    margin-bottom: 0;
+}
+
+.table-resource-preview {
+    thead {
+        tr {
+            th {
+                vertical-align: bottom;
+            }
+        }
+    }
+}
+
+.data-explorer-filter-operators {
+    display: inline-block;
+    margin: 0 @grid-gutter-width/2;
+    input[type="radio"] {
+        // opacity: 0;
+        display: none;
+        &:checked+label {
+            color: @data-explorer-filter-operator-color;
+            background-color: @data-explorer-filter-operator-bg !important;
+        }
+    }
+    .form-group{
+        &:first-child{
+            label{
+                margin-left: 0;
+            }
+        }
+    }
+    label {
+        // &.btn {
+        //     margin-left: -@grid-gutter-width/3;
+        // }
+        .unselectable;
+        border-radius: @data-explorer-filter-operator-border-radius;
+        &:after {
+            content: none;
+        }
+    }
+}
+
+.data-explorer-filter-create {
+    .fade-in-animation;
+    border-top: 1px solid @data-explorer-filter-create-top-border;
+    margin-top: @grid-gutter-width/2;
+    padding-top: @grid-gutter-width/2;
+}
+
+.data-explorer-active-filters {
+    margin-bottom: 0;
+    .pill {
+        .fade-in-animation;
+        padding-bottom: 2px;
+    }
+}
+
+.data-explorer-extracts {
+    .dataset-resources {
+        font-size: initial;
+        margin-bottom: 0;
+    }
+}
+
+.ui-datepicker-trigger {
+    color: @data-explorer-filter-operator-color;
+    background: @data-explorer-filter-operator-bg;
+    position: relative;
+    border: 0;
+    height: 34px;
+    vertical-align: middle;
+    padding: 6px 12px;
+    &:before {
+        font-family: 'FontAwesome', sans-serif;
+        position: absolute;
+        display: inline-block;
+        content: '\f133';
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+    }
+}
+
+.edit{
+    .data-filter-edit{
+        .data-filter-edit-active;
+    }
+}
+
+.data-filter-edit{
+    padding: 0 6px;
+    border-radius: 2px;
+    border: @data-explorer-edit-button-border;
+    margin: 0 @grid-gutter-width/6 0 @grid-gutter-width/5;
+
+    &:hover{
+        .data-filter-edit-active;
+    }
+}
+
+#data-filter-interval-toggle{
+    display: none;
+}
+
+#data-filter-input-type{
+    .text-uppercase;
+}
+
+.data-filter-interval-fields{
+    display: inline-block;
+    margin-left: @grid-gutter-width/2;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+}

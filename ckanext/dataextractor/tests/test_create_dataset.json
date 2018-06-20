@@ -1,0 +1,12 @@
+{
+    "name": "test-data",
+    "title": "Test data",
+    "notes": "Maintaining balance between consumption and production in the electricity system and fulfilling contracts with eg Sweden or Norway may require an up or down regulation of production and consumption in the Danish electricity system (east or west). For this purpose a so-called regulating power market is established as a common market for the Nordic countries. The principle of the regulating power market is the market players forwarding their bids on how much capacity they can offer for up or down regulations and which prices they require.",
+    "owner_org": "test-ndk",
+    "license_id": "Creative Commons CCZero",
+    "author": "Energinet",
+    "author_email": "energidata@energinet.dk",
+    "update_frequency": "Hourly",
+    "comment": "",
+    "resolution": "PT1H"
+}

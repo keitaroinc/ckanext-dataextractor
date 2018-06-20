@@ -1,0 +1,4 @@
+azure-storage==0.34.0
+XlsxWriter==0.9.6
+requests==2.13.0
+

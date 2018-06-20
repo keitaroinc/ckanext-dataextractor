@@ -1,0 +1,25 @@
+{
+  "name": "ckanext-dataextractor",
+  "version": "1.0.0",
+  "description": "Data Extractor extension for CKAN",
+  "main": " ",
+  "scripts": {
+    "test": "",
+    "watch": "less-watch-compiler ckanext/dataextractor/public/less/ ckanext/dataextractor/public/css/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViderumGlobal/ckanext-dataextractor.git"
+  },
+  "author": "Keitaro Inc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ViderumGlobal/ckanext-dataextractor/issues"
+  },
+  "homepage": "https://github.com/ViderumGlobal/ckanext-dataextractor#readme",
+  "dependencies": {
+    "jquery-ui-dist": "^1.12.1",
+    "less": "^2.7.2",
+    "less-watch-compiler": "^1.4.2"
+  }
+}

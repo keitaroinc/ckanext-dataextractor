@@ -1,0 +1,7 @@
+======================
+Full table of contents
+======================
+
+.. toctree::
+
+   api/index

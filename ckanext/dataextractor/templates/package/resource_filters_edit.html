@@ -1,0 +1,52 @@
+{% resource 'dataextractor/resource-filters.js' %}
+{% extends "package/resource_filters_base.html" %}
+
+{% block primary_content_inner %}
+{% set edit_url = h.url_for('resource_filters_edit', name=pkg.name, resource_id=res.id) %}
+{% set create_url = h.url_for('resource_filters_create', name=pkg.name, resource_id=res.id) %}
+<h1 class="h3">{% block form_title %}{{ _('Active Resource Filters') }}{% endblock %}</h1>
+{% block form %}{% endblock %}
+
+<div class="module-content">
+  <div class="page_primary_action">
+    {% if active_filters %}
+    <table class="table">
+      <colgroup>
+        <col class="col-md-1">
+        <col class="col-md-7">
+        <col class="col-md-4">
+      </colgroup>
+      <thead>
+      <tr>
+        <th><span class="fa fa-tasks"></span></th>
+        <th>{{_('Filter Name')}}</th>
+        <th>{{_('Filter Type')}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for _f in active_filters %}
+      <tr>
+        <td><span class="fa fa-filter"></span></td>
+        <td scope="row">{{_f.name}}</td>
+        <td>{{_f.type}}</td>
+        <td class="text-right">
+          <a href="{{h.url_for('resource_filters_delete', name=pkg.name, resource_id=res.id, filter_name=_f.name)}}" class="btn btn-sm btn-default">
+            <span class="fa fa-trash"></span>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>{{_('This resource does not have active filters.')}}</p>
+    {% endif %}
+
+    <div class="form-actions">
+      <a class="btn btn-primary pull-left" href="{{create_url}}">
+        {{_('Add')}}
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

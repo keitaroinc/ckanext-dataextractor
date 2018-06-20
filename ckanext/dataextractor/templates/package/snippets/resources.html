@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
+{% set url_action = 'resource_read' if can_edit == 'True' else 'resource_extractor_show' %}
+{% set ctrl = 'package' if can_edit == 'True' else 'ckanext.dataextractor.controllers.dataextractor:DataextractorController' %}
+
+{% block resources_list %}
+  <ul class="unstyled nav nav-simple">
+    {% for resource in resources %}
+      <li class="nav-item{{ ' active' if active == resource.id }}">
+        {% link_for h.resource_display_name(resource)|truncate(25), controller=ctrl, action=action or url_action, id=pkg.name, resource_id=resource.id, inner_span=true %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

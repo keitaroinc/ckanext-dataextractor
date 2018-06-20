@@ -1,0 +1,1110 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Legacy APIs &mdash; CKAN 2.5.2 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="CKAN 2.5.2 documentation" href="../index.html"/>
+        <link rel="up" title="API guide" href="index.html"/>
+        <link rel="prev" title="API guide" href="index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../contents.html" class="icon icon-home"> CKAN
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.5.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Legacy APIs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api-versions">API Versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-api">Model API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#model-resources">Model Resources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-methods">Model Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#model-formats">Model Formats</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#search-api">Search API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#search-resources">Search Resources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#search-methods">Search Methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#search-formats">Search Formats</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#util-api">Util API</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dataset-autocomplete">dataset autocomplete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tag-autocomplete">tag autocomplete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#resource-format-autocomplete">resource format autocomplete</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#markdown">markdown</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#is-slug-valid">is slug valid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#munge-package-name">munge package name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#munge-title-to-package-name">munge title to package name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#munge-tag">munge tag</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#status-codes">Status Codes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#making-an-api-request">Making an API request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#example-importing-datasets-with-the-ckan-api">Example: Importing datasets with the CKAN API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#api-versions">API versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#authentication-and-api-keys">Authentication and API keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#get-able-api-functions">GET-able API functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#jsonp-support">JSONP support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#api-examples">API Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#action-api-reference">Action API reference</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../contents.html">CKAN</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../contents.html">Docs</a> &raquo;</li>
+      
+          <li><a href="index.html">API guide</a> &raquo;</li>
+      
+    <li>Legacy APIs</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/legacy-api.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="legacy-apis">
+<h1>Legacy APIs<a class="headerlink" href="#legacy-apis" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The legacy APIs documented in this section are provided for
+backwards-compatibility, but support for new CKAN features will not be
+added to these APIs.</p>
+</div>
+<div class="section" id="api-versions">
+<h2>API Versions<a class="headerlink" href="#api-versions" title="Permalink to this headline">¶</a></h2>
+<p>There are two versions of the legacy APIs. When the API returns a reference to
+an object, version 1 of the API will return the name of the object (e.g.
+<tt class="docutils literal"><span class="pre">&quot;river-pollution&quot;</span></tt>), whereas version 2 will return the ID of the object
+(e.g.  <tt class="docutils literal"><span class="pre">&quot;a3dd8f64-9078-4f04-845c-e3f047125028&quot;</span></tt>). Tag objects are an
+exception, tag names are immutable so tags are always referred to with their
+name.</p>
+<p>You can specify which version of the API to use in the URL. For example,
+opening this URL in your web browser will list demo.ckan.org&#8217;s datasets using
+API version 1:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/1/rest/dataset">http://demo.ckan.org/api/1/rest/dataset</a></p>
+<p>Opening this URL calls the same function using API version 2:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/2/rest/dataset">http://demo.ckan.org/api/2/rest/dataset</a></p>
+<p>If no version number is given in the URL then the API defaults to version 1, so
+this URL will list the site&#8217;s datasets using API version 1:</p>
+<p><a class="reference external" href="http://demo.ckan.org/api/rest/dataset">http://demo.ckan.org/api/rest/dataset</a></p>
+<p>Dataset names can change, so to reliably refer to the same dataset over time,
+you will want to use the dataset&#8217;s ID and therefore use API v2. Alternatively,
+many people prefer to deal with Names, so API v1 suits them.</p>
+<p>When posting parameters with your API requests, you can refer to objects by
+either their name or ID, interchangeably.</p>
+</div>
+<div class="section" id="model-api">
+<h2>Model API<a class="headerlink" href="#model-api" title="Permalink to this headline">¶</a></h2>
+<p>Model resources are available at published locations. They are represented with
+a variety of data formats. Each resource location supports a number of methods.</p>
+<p>The data formats of the requests and the responses are defined below.</p>
+<div class="section" id="model-resources">
+<h3>Model Resources<a class="headerlink" href="#model-resources" title="Permalink to this headline">¶</a></h3>
+<p>Here are the resources of the Model API.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Model Resource</th>
+<th class="head">Location</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Dataset Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/dataset</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Dataset Entity</td>
+<td><tt class="docutils literal"><span class="pre">/rest/dataset/DATASET-REF</span></tt></td>
+</tr>
+<tr class="row-even"><td>Group Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/group</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Group Entity</td>
+<td><tt class="docutils literal"><span class="pre">/rest/group/GROUP-REF</span></tt></td>
+</tr>
+<tr class="row-even"><td>Tag Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/tag</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Tag Entity</td>
+<td><tt class="docutils literal"><span class="pre">/rest/tag/TAG-NAME</span></tt></td>
+</tr>
+<tr class="row-even"><td>Rating Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/rating</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Dataset Relationships Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/dataset/DATASET-REF/relationships</span></tt></td>
+</tr>
+<tr class="row-even"><td>Dataset Relationships Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/dataset/DATASET-REF/RELATIONSHIP-TYPE</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Dataset Relationships Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/dataset/DATASET-REF/relationships/DATASET-REF</span></tt></td>
+</tr>
+<tr class="row-even"><td>Dataset Relationship Entity</td>
+<td><tt class="docutils literal"><span class="pre">/rest/dataset/DATASET-REF/RELATIONSHIP-TYPE/DATASET-REF</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Dataset&#8217;s Revisions Entity</td>
+<td><tt class="docutils literal"><span class="pre">/rest/dataset/DATASET-REF/revisions</span></tt></td>
+</tr>
+<tr class="row-even"><td>Revision Register</td>
+<td><tt class="docutils literal"><span class="pre">/rest/revision</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Revision Entity</td>
+<td><tt class="docutils literal"><span class="pre">/rest/revision/REVISION-ID</span></tt></td>
+</tr>
+<tr class="row-even"><td>License List</td>
+<td><tt class="docutils literal"><span class="pre">/rest/licenses</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>Possible values for DATASET-REF are the dataset id, or the current dataset name.</p>
+<p>Possible values for RELATIONSHIP-TYPE are described in the Relationship-Type data format.</p>
+</div>
+<div class="section" id="model-methods">
+<h3>Model Methods<a class="headerlink" href="#model-methods" title="Permalink to this headline">¶</a></h3>
+<p>Here are the methods of the Model API.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="41%" />
+<col width="11%" />
+<col width="24%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Resource</th>
+<th class="head">Method</th>
+<th class="head">Request</th>
+<th class="head">Response</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Dataset Register</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Dataset-List</td>
+</tr>
+<tr class="row-odd"><td>Dataset Register</td>
+<td>POST</td>
+<td>Dataset</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Dataset Entity</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Dataset</td>
+</tr>
+<tr class="row-odd"><td>Dataset Entity</td>
+<td>PUT</td>
+<td>Dataset</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Group Register</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Group-List</td>
+</tr>
+<tr class="row-odd"><td>Group Register</td>
+<td>POST</td>
+<td>Group</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Group Entity</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Group</td>
+</tr>
+<tr class="row-odd"><td>Group Entity</td>
+<td>PUT</td>
+<td>Group</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Tag Register</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Tag-List</td>
+</tr>
+<tr class="row-odd"><td>Tag Entity</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Dataset-List</td>
+</tr>
+<tr class="row-even"><td>Rating Register</td>
+<td>POST</td>
+<td>Rating</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>Rating Entity</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Rating</td>
+</tr>
+<tr class="row-even"><td>Dataset Relationships Register</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Pkg-Relationships</td>
+</tr>
+<tr class="row-odd"><td>Dataset Relationship Entity</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Pkg-Relationship</td>
+</tr>
+<tr class="row-even"><td>Dataset Relationships Register</td>
+<td>POST</td>
+<td>Pkg-Relationship</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>Dataset Relationship Entity</td>
+<td>PUT</td>
+<td>Pkg-Relationship</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>Dataset&#8217;s Revisions Entity</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Pkg-Revisions</td>
+</tr>
+<tr class="row-odd"><td>Revision List</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Revision-List</td>
+</tr>
+<tr class="row-even"><td>Revision Entity</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Revision</td>
+</tr>
+<tr class="row-odd"><td>License List</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>License-List</td>
+</tr>
+</tbody>
+</table>
+<p>In general:</p>
+<ul class="simple">
+<li>GET to a register resource will <em>list</em> the entities of that type.</li>
+<li>GET of an entity resource will <em>show</em> the entity&#8217;s properties.</li>
+<li>POST of entity data to a register resource will <em>create</em> the new entity.</li>
+<li>PUT of entity data to an existing entity resource will <em>update</em> it.</li>
+</ul>
+<p>It is usually clear whether you are trying to create or update, so in these cases, HTTP POST and PUT methods are accepted by CKAN interchangeably.</p>
+</div>
+<div class="section" id="model-formats">
+<h3>Model Formats<a class="headerlink" href="#model-formats" title="Permalink to this headline">¶</a></h3>
+<p>Here are the data formats for the Model API:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Dataset-Ref</td>
+<td>Dataset-Name-String (API v1) OR Dataset-Id-Uuid (API v2)</td>
+</tr>
+<tr class="row-odd"><td>Dataset-List</td>
+<td>[ Dataset-Ref, Dataset-Ref, Dataset-Ref, ... ]</td>
+</tr>
+<tr class="row-even"><td>Dataset</td>
+<td>{ id: Uuid, name: Name-String, title: String, version:
+String, url: String, resources: [ Resource, Resource, ...],
+author: String, author_email: String, maintainer: String,
+maintainer_email: String, license_id: String,
+tags: Tag-List, notes: String, extras: { Name-String:
+String, ... } }
+See note below on additional fields upon GET of a dataset.</td>
+</tr>
+<tr class="row-odd"><td>Group-Ref</td>
+<td>Group-Name-String (API v1) OR Group-Id-Uuid (API v2)</td>
+</tr>
+<tr class="row-even"><td>Group-List</td>
+<td>[ Group-Ref, Group-Ref, Group-Ref, ... ]</td>
+</tr>
+<tr class="row-odd"><td>Group</td>
+<td>{ name: Group-Name-String, title: String,
+description: String, packages: Dataset-List }</td>
+</tr>
+<tr class="row-even"><td>Tag-List</td>
+<td>[ Name-String, Name-String, Name-String, ... ]</td>
+</tr>
+<tr class="row-odd"><td>Tag</td>
+<td>{ name: Name-String }</td>
+</tr>
+<tr class="row-even"><td>Resource</td>
+<td>{ url: String, format: String, description: String,
+hash: String }</td>
+</tr>
+<tr class="row-odd"><td>Rating</td>
+<td>{ dataset: Name-String, rating: int }</td>
+</tr>
+<tr class="row-even"><td>Pkg-Relationships</td>
+<td>[ Pkg-Relationship, Pkg-Relationship, ... ]</td>
+</tr>
+<tr class="row-odd"><td>Pkg-Relationship</td>
+<td>{ subject: Dataset-Name-String,
+object: Dataset-Name-String, type: Relationship-Type,
+comment: String }</td>
+</tr>
+<tr class="row-even"><td>Pkg-Revisions</td>
+<td>[ Pkg-Revision, Pkg-Revision, Pkg-Revision, ... ]</td>
+</tr>
+<tr class="row-odd"><td>Pkg-Revision</td>
+<td>{ id: Uuid, message: String, author: String,
+timestamp: Date-Time }</td>
+</tr>
+<tr class="row-even"><td>Relationship-Type</td>
+<td>One of: &#8216;depends_on&#8217;, &#8216;dependency_of&#8217;,
+&#8216;derives_from&#8217;, &#8216;has_derivation&#8217;,
+&#8216;child_of&#8217;, &#8216;parent_of&#8217;,
+&#8216;links_to&#8217;, &#8216;linked_from&#8217;.</td>
+</tr>
+<tr class="row-odd"><td>Revision-List</td>
+<td>[ revision_id, revision_id, revision_id, ... ]</td>
+</tr>
+<tr class="row-even"><td>Revision</td>
+<td>{ id: Uuid, message: String, author: String,
+timestamp: Date-Time, datasets: Dataset-List }</td>
+</tr>
+<tr class="row-odd"><td>License-List</td>
+<td>[ License, License, License, ... ]</td>
+</tr>
+<tr class="row-even"><td>License</td>
+<td>{ id: Name-String, title: String, is_okd_compliant:
+Boolean, is_osi_compliant: Boolean, tags: Tag-List,
+family: String, url: String, maintainer: String,
+date_created: Date-Time, status: String }</td>
+</tr>
+</tbody>
+</table>
+<p>To send request data, create the JSON-format string (encode in UTF8) put it in the request body and send it using PUT or POST.</p>
+<p>Response data will be in the response body in JSON format.</p>
+<p>Notes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>When you update an object, fields that you don&#8217;t supply will remain as they were before.</li>
+<li>To delete an &#8216;extra&#8217; key-value pair, supply the key with JSON value: <tt class="docutils literal"><span class="pre">null</span></tt></li>
+<li>When you read a dataset, some additional information is supplied that you cannot modify and POST back to the CKAN API. These &#8216;read-only&#8217; fields are provided only on the Dataset GET. This is a convenience to clients, to save further requests. This applies to the following fields:</li>
+</ul>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="85%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Key</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>id</td>
+<td>Unique Uuid for the Dataset</td>
+</tr>
+<tr class="row-odd"><td>revision_id</td>
+<td>Latest revision ID for the core Package data (but is not affected by changes to tags, groups, extras, relationships etc)</td>
+</tr>
+<tr class="row-even"><td>metadata_created</td>
+<td>Date the Dataset (record) was created</td>
+</tr>
+<tr class="row-odd"><td>metadata_modified</td>
+<td>Date the Dataset (record) was last modified</td>
+</tr>
+<tr class="row-even"><td>relationships</td>
+<td>info on Dataset Relationships</td>
+</tr>
+<tr class="row-odd"><td>ratings_average</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td>ratings_count</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>ckan_url</td>
+<td>full URL of the Dataset</td>
+</tr>
+<tr class="row-even"><td>download_url (API v1)</td>
+<td>URL of the first Resource</td>
+</tr>
+<tr class="row-odd"><td>isopen</td>
+<td>boolean indication of whether dataset is open according to Open Knowledge Definition, based on other fields</td>
+</tr>
+<tr class="row-even"><td>notes_rendered</td>
+<td>HTML rendered version of the Notes field (which may contain Markdown)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="search-api">
+<h2>Search API<a class="headerlink" href="#search-api" title="Permalink to this headline">¶</a></h2>
+<p>Search resources are available at published locations. They are represented with
+a variety of data formats. Each resource location supports a number of methods.</p>
+<p>The data formats of the requests and the responses are defined below.</p>
+<div class="section" id="search-resources">
+<h3>Search Resources<a class="headerlink" href="#search-resources" title="Permalink to this headline">¶</a></h3>
+<p>Here are the published resources of the Search API.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Search Resource</th>
+<th class="head">Location</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Dataset Search</td>
+<td><tt class="docutils literal"><span class="pre">/search/dataset</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Resource Search</td>
+<td><tt class="docutils literal"><span class="pre">/search/resource</span></tt></td>
+</tr>
+<tr class="row-even"><td>Revision Search</td>
+<td><tt class="docutils literal"><span class="pre">/search/revision</span></tt></td>
+</tr>
+<tr class="row-odd"><td>Tag Counts</td>
+<td><tt class="docutils literal"><span class="pre">/tag_counts</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>See below for more information about dataset and revision search parameters.</p>
+</div>
+<div class="section" id="search-methods">
+<h3>Search Methods<a class="headerlink" href="#search-methods" title="Permalink to this headline">¶</a></h3>
+<p>Here are the methods of the Search API.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="9%" />
+<col width="27%" />
+<col width="29%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Resource</th>
+<th class="head">Method</th>
+<th class="head">Request</th>
+<th class="head">Response</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Dataset Search</td>
+<td>POST</td>
+<td>Dataset-Search-Params</td>
+<td>Dataset-Search-Response</td>
+</tr>
+<tr class="row-odd"><td>Resource Search</td>
+<td>POST</td>
+<td>Resource-Search-Params</td>
+<td>Resource-Search-Response</td>
+</tr>
+<tr class="row-even"><td>Revision Search</td>
+<td>POST</td>
+<td>Revision-Search-Params</td>
+<td>Revision-List</td>
+</tr>
+<tr class="row-odd"><td>Tag Counts</td>
+<td>GET</td>
+<td>&nbsp;</td>
+<td>Tag-Count-List</td>
+</tr>
+</tbody>
+</table>
+<p>It is also possible to supply the search parameters in the URL of a GET request,
+for example <tt class="docutils literal"><span class="pre">/api/search/dataset?q=geodata&amp;amp;allfields=1</span></tt>.</p>
+</div>
+<div class="section" id="search-formats">
+<h3>Search Formats<a class="headerlink" href="#search-formats" title="Permalink to this headline">¶</a></h3>
+<p>Here are the data formats for the Search API.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Format</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Dataset-Search-Params
+Resource-Search-Params
+Revision-Search-Params</td>
+<td>{ Param-Key: Param-Value, Param-Key: Param-Value, ... }
+See below for full details of search parameters across the
+various domain objects.</td>
+</tr>
+<tr class="row-odd"><td>Dataset-Search-Response</td>
+<td>{ count: Count-int, results: [Dataset, Dataset, ... ] }</td>
+</tr>
+<tr class="row-even"><td>Resource-Search-Response</td>
+<td>{ count: Count-int, results: [Resource, Resource, ... ] }</td>
+</tr>
+<tr class="row-odd"><td>Revision-List</td>
+<td>[ Revision-Id, Revision-Id, Revision-Id, ... ]
+NB: Ordered with youngest revision first.
+NB: Limited to 50 results at a time.</td>
+</tr>
+<tr class="row-even"><td>Tag-Count-List</td>
+<td>[ [Name-String, Integer], [Name-String, Integer], ... ]</td>
+</tr>
+</tbody>
+</table>
+<p>The <tt class="docutils literal"><span class="pre">Dataset</span></tt> and <tt class="docutils literal"><span class="pre">Revision</span></tt> data formats are as defined in <a class="reference internal" href="#model-formats">Model Formats</a>.</p>
+<p><strong>Dataset Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="14%" />
+<col width="32%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Param-Key</th>
+<th class="head">Param-Value</th>
+<th class="head">Examples</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>q</td>
+<td>Search-String</td>
+<td><div class="first last line-block">
+<div class="line">q=geodata</div>
+<div class="line">q=government+sweden</div>
+<div class="line">q=%22drug%20abuse%22</div>
+<div class="line">q=tags:&#8221;river pollution&#8221;</div>
+</div>
+</td>
+<td>Criteria to search the dataset
+fields for. URL-encoded search
+text. (You can also concatenate
+words with a &#8216;+&#8217; symbol in a
+URL.) Search results must contain
+all the specified words.  You
+can also search within specific
+fields.</td>
+</tr>
+<tr class="row-odd"><td>qjson</td>
+<td>JSON encoded
+options</td>
+<td>[&#8216;q&#8217;:&#8217;geodata&#8217;]</td>
+<td>All search parameters can be
+json-encoded and supplied to this
+parameter as a more flexible
+alternative in GET requests.</td>
+</tr>
+<tr class="row-even"><td>title,
+tags, notes, groups,
+author, maintainer,
+update_frequency, or
+any &#8216;extra&#8217; field name
+e.g. department</td>
+<td>Search-String</td>
+<td><div class="first last line-block">
+<div class="line">title=uk&amp;amp;tags=health</div>
+<div class="line">department=environment</div>
+<div class="line">tags=health&amp;tags=pollution</div>
+<div class="line">tags=river%20pollution</div>
+</div>
+</td>
+<td>Search in a particular a field.</td>
+</tr>
+<tr class="row-odd"><td>order_by</td>
+<td>field-name
+(default=rank)</td>
+<td>order_by=name</td>
+<td>Specify either rank or the field
+to sort the results by</td>
+</tr>
+<tr class="row-even"><td>offset, limit</td>
+<td>result-int
+(defaults:
+offset=0,
+limit=20)</td>
+<td>offset=40&amp;amp;limit=20</td>
+<td>Pagination options. Offset is the
+number of the first result and
+limit is the number of results to
+return.</td>
+</tr>
+<tr class="row-odd"><td>all_fields</td>
+<td>0 (default)
+or 1</td>
+<td>all_fields=1</td>
+<td>Each matching search result is
+given as either a dataset name
+(0) or the full dataset record
+(1).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">filter_by_openness and filter_by_downloadable were dropped from CKAN version 1.5 onwards.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Only public datasets can be accessed via the legacy search API, regardless of
+the provided authorization. If you need to access private datasets via the
+API you will need to use the <cite>package_search</cite> method of the <a class="reference internal" href="index.html"><em>API guide</em></a>.</p>
+</div>
+<p><strong>Resource Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="13%" />
+<col width="36%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Param-Key</th>
+<th class="head">Param-Value</th>
+<th class="head">Example</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>url, format,
+description</td>
+<td>Search-String</td>
+<td><div class="first last line-block">
+<div class="line">url=statistics.org</div>
+<div class="line">format=xls</div>
+<div class="line">description=Research+Institute</div>
+</div>
+</td>
+<td>Criteria to search the dataset
+fields for. URL-encoded search
+text. This search string must be
+found somewhere within the field
+to match.
+Case insensitive.</td>
+</tr>
+<tr class="row-odd"><td>qjson</td>
+<td>JSON encoded
+options</td>
+<td>[&#8216;url&#8217;:&#8217;www.statistics.org&#8217;]</td>
+<td>All search parameters can be
+json-encoded and supplied to this
+parameter as a more flexible
+alternative in GET requests.</td>
+</tr>
+<tr class="row-even"><td>hash</td>
+<td>Search-String</td>
+<td>hash=b0d7c260-35d4-42ab-9e3d-c1f4db9bc2f0</td>
+<td>Searches for an match of the
+hash field. An exact match or
+match up to the length of the
+hash given.</td>
+</tr>
+<tr class="row-odd"><td>all_fields</td>
+<td>0 (default)
+or 1</td>
+<td>all_fields=1</td>
+<td>Each matching search result is
+given as either an ID (0) or the
+full resource record</td>
+</tr>
+<tr class="row-even"><td>offset, limit</td>
+<td>result-int
+(defaults:
+offset=0,
+limit=20)</td>
+<td>offset=40&amp;amp;limit=20</td>
+<td>Pagination options. Offset is the
+number of the first result and
+limit is the number of results to
+return.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Powerful searching from the command-line can be achieved with curl and the qjson parameter. In this case you need to remember to escapt the curly braces and use url encoding (e.g. spaces become <tt class="docutils literal"><span class="pre">%20</span></tt>). For example:</p>
+<div class="last highlight-python"><div class="highlight"><pre>curl &#39;http://thedatahub.org/api/search/dataset?qjson=\{&quot;author&quot;:&quot;The%20Stationery%20Office%20Limited&quot;\}&#39;
+</pre></div>
+</div>
+</div>
+<p><strong>Revision Parameters</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="12%" />
+<col width="42%" />
+<col width="27%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Param-Key</th>
+<th class="head">Param-Value</th>
+<th class="head">Example</th>
+<th class="head">Notes</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>since_time</td>
+<td>Date-Time</td>
+<td>since_time=2010-05-05T19:42:45.854533</td>
+<td>The time can be less precisely
+stated (e.g 2010-05-05).</td>
+</tr>
+<tr class="row-odd"><td>since_id</td>
+<td>Uuid</td>
+<td>since_id=6c9f32ef-1f93-4b2f-891b-fd01924ebe08</td>
+<td>The stated id will not be
+included in the results.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="util-api">
+<h2>Util API<a class="headerlink" href="#util-api" title="Permalink to this headline">¶</a></h2>
+<p>The Util API provides various utility APIs &#8211; e.g. auto-completion APIs used by
+front-end javascript.</p>
+<p>All Util APIs are read-only. The response format is JSON. Javascript calls may
+want to use the JSONP formatting.</p>
+<div class="section" id="dataset-autocomplete">
+<h3>dataset autocomplete<a class="headerlink" href="#dataset-autocomplete" title="Permalink to this headline">¶</a></h3>
+<p>There an autocomplete API for package names which matches on name or title.</p>
+<p>This URL:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/2/util/dataset/autocomplete?incomplete=a%20novel
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;ResultSet&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;Result&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&quot;match_field&quot;</span><span class="p">:</span> <span class="s">&quot;title&quot;</span><span class="p">,</span> <span class="s">&quot;match_displayed&quot;</span><span class="p">:</span> <span class="s">&quot;A Novel By Tolstoy (annakarenina)&quot;</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">:</span> <span class="s">&quot;annakarenina&quot;</span><span class="p">,</span> <span class="s">&quot;title&quot;</span><span class="p">:</span> <span class="s">&quot;A Novel By Tolstoy&quot;</span><span class="p">}]}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tag-autocomplete">
+<h3>tag autocomplete<a class="headerlink" href="#tag-autocomplete" title="Permalink to this headline">¶</a></h3>
+<p>There is also an autocomplete API for tags which looks like this:</p>
+<p>This URL:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/2/util/tag/autocomplete?incomplete=ru
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;ResultSet&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;Result&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&quot;Name&quot;</span><span class="p">:</span> <span class="s">&quot;russian&quot;</span><span class="p">}]}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="resource-format-autocomplete">
+<h3>resource format autocomplete<a class="headerlink" href="#resource-format-autocomplete" title="Permalink to this headline">¶</a></h3>
+<p>Similarly, there is an autocomplete API for the resource format field
+which is available at:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/2/util/resource/format_autocomplete?incomplete=cs
+</pre></div>
+</div>
+<p>This returns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;ResultSet&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;Result&quot;</span><span class="p">:</span> <span class="p">[{</span><span class="s">&quot;Format&quot;</span><span class="p">:</span> <span class="s">&quot;csv&quot;</span><span class="p">}]}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="markdown">
+<h3>markdown<a class="headerlink" href="#markdown" title="Permalink to this headline">¶</a></h3>
+<p>Takes a raw markdown string and returns a corresponding chunk of HTML. CKAN uses the basic Markdown format with some modifications (for security) and useful additions (e.g. auto links to datasets etc. e.g. <tt class="docutils literal"><span class="pre">dataset:river-quality</span></tt>).</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/util/markdown?q=&lt;http://ibm.com/&gt;
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-python"><div class="highlight"><pre>&quot;&lt;p&gt;&lt;a href=&quot;http://ibm.com/&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;http://ibm.com/&lt;/a&gt;\n&lt;/p&gt;&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="is-slug-valid">
+<h3>is slug valid<a class="headerlink" href="#is-slug-valid" title="Permalink to this headline">¶</a></h3>
+<p>Checks a name is valid for a new dataset (package) or group, with respect to it being used already.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/2/util/is_slug_valid?slug=river-quality&amp;type=package
+</pre></div>
+</div>
+<p>Response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;valid&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="munge-package-name">
+<h3>munge package name<a class="headerlink" href="#munge-package-name" title="Permalink to this headline">¶</a></h3>
+<p>For taking an readable identifier and munging it to ensure it is a valid dataset id. Symbols and whitespeace are converted into dashes. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/util/dataset/munge_name?name=police%20spending%20figures%202009
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;police-spending-figures-2009&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="munge-title-to-package-name">
+<h3>munge title to package name<a class="headerlink" href="#munge-title-to-package-name" title="Permalink to this headline">¶</a></h3>
+<p>For taking a title of a package and munging it to a readable and valid dataset id. Symbols and whitespeace are converted into dashes, with multiple dashes collapsed. Ensures that long titles with a year at the end preserves the year should it need to be shortened. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/util/dataset/munge_title_to_name?title=police:%20spending%20figures%202009
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;police-spending-figures-2009&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="munge-tag">
+<h3>munge tag<a class="headerlink" href="#munge-tag" title="Permalink to this headline">¶</a></h3>
+<p>For taking a readable word/phrase and munging it to a valid tag (name). Symbols and whitespeace are converted into dashes. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre>/api/util/tag/munge?tag=water%20quality
+</pre></div>
+</div>
+<p>Returns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;water-quality&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="status-codes">
+<h2>Status Codes<a class="headerlink" href="#status-codes" title="Permalink to this headline">¶</a></h2>
+<p>Standard HTTP status codes are used to signal method outcomes.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="93%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Code</th>
+<th class="head">Name</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>200</td>
+<td>OK</td>
+</tr>
+<tr class="row-odd"><td>201</td>
+<td>OK and new object created (referred to in the Location header)</td>
+</tr>
+<tr class="row-even"><td>301</td>
+<td>Moved Permanently</td>
+</tr>
+<tr class="row-odd"><td>400</td>
+<td>Bad Request</td>
+</tr>
+<tr class="row-even"><td>403</td>
+<td>Not Authorized</td>
+</tr>
+<tr class="row-odd"><td>404</td>
+<td>Not Found</td>
+</tr>
+<tr class="row-even"><td>409</td>
+<td>Conflict (e.g. name already exists)</td>
+</tr>
+<tr class="row-odd"><td>500</td>
+<td>Service Error</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation"
+         aria-label="footer navigation">
+      
+      
+        <a href="index.html" class="btn btn-neutral"
+           title="API guide">
+           <span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr></hr>
+
+  <p>An <a href="http://okfn.org">Open Knowledge Foundation</a> project.</p>
+
+  <p class="copyright">
+      &copy; 2009-2013, <a href="http://okfn.org/">Open Knowledge Foundation</a>.
+    Licensed under <a
+    href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons
+    Attribution ShareAlike (Unported) v3.0 License</a>.<br />
+    <img src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" alt="CC License Logo" />
+    <a href="http://opendefinition.org/"><img src="http://assets.okfn.org/images/ok_buttons/oc_80x15_blue.png" border="0"
+      alt="{{ _('Open Content') }}" /></a>
+  
+  </p>
+
+  <p>
+    <a href="https://github.com/ckan/ckan">Source</a>
+    &mdash;
+    <a href="https://github.com/ckan/ckan/issues">Issues</a>
+    &mdash;
+    <a href="http://lists.okfn.org/mailman/listinfo/ckan-dev">Mailing List</a>
+    &mdash;
+    <a href="http://twitter.com/CKANProject">Twitter @CKANProject</a>
+  </p>
+
+  <p>
+    Related Projects:
+    <a href="http://thedatahub.org/">The DataHub</a>
+    &mdash;
+    <a href="http://datacatalogs.org">DataCatalogs.org</a>
+    &mdash;
+    <a href="http://openspending.org">OpenSpending.org</a>
+    &mdash;
+    <a href="http://opendatahandbook.org">Open Data Handbook</a>
+  </p>
+
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a>  provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'2.5.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
