@@ -14,7 +14,7 @@
 
 {% block resource_content %}
 {% block resource_read_title %}
-{{super()}}
+<h1 class="page-heading">{{ h.resource_display_name(res) | truncate(80) }}</h1>
 {% endblock %}
 {% endblock %}
 
