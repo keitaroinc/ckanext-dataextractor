@@ -1,0 +1,309 @@
+# Translations template for ckanext-dataextractor.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the ckanext-dataextractor
+# project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: ckanext-dataextractor 0.0.1\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-06-08 18:07+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+
+#: ckanext/dataextractor/controllers/dataextractor.py:99
+msgid "Dataset not found"
+msgstr ""
+
+#: ckanext/dataextractor/controllers/dataextractor.py:106
+msgid "Resource not found"
+msgstr ""
+
+#: ckanext/dataextractor/controllers/resource_filters.py:76
+msgid "The filter has been deleted."
+msgstr ""
+
+#: ckanext/dataextractor/controllers/resource_filters.py:89
+msgid "Resource filters created successfully!"
+msgstr ""
+
+#: ckanext/dataextractor/lib/file_writer_service.py:177
+#, python-format
+msgid "format: must be one of %s"
+msgstr ""
+
+#: ckanext/dataextractor/logic/auth.py:10
+msgid "User not authorized to delete blobs"
+msgstr ""
+
+#: ckanext/dataextractor/logic/action/create.py:46
+#: ckanext/dataextractor/logic/action/delete.py:43
+msgid "'{0}' filter type not supported. Supported types are: {1}"
+msgstr ""
+
+#: ckanext/dataextractor/logic/action/create.py:54
+msgid "'{0}' already exists for the given resource"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:8
+msgid "Organizations"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:11
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:15
+msgid "Datasets"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:16
+msgid "Create Dataset"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:23
+#: ckanext/dataextractor/templates/package/resource_filters_base.html:13
+#: ckanext/dataextractor/templates/package/resource_filters_create.html:57
+msgid "Edit"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:30
+#: ckanext/dataextractor/templates/package/resource_filters_base.html:18
+msgid "All resources"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:37
+#: ckanext/dataextractor/templates/package/resource_filters_base.html:24
+msgid "View resource"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_edit_base.html:44
+#: ckanext/dataextractor/templates/package/resource_filters_base.html:35
+msgid "Resource Filters"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:23
+msgid ""
+"No data filters are assigned to this Data Explorer view yet. You are viewing "
+"an unfiltered version of the complete resource data."
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:29
+msgid "Data Explorer Filters"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:60
+msgid "No filters available"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:93
+msgid "Save Filter"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:100
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:46
+msgid "Create"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:101
+msgid "Apply"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:102
+#: ckanext/dataextractor/templates/package/resource_filters_create.html:52
+msgid "Reset"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:108
+msgid "No data found matching your search criteria."
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:110
+msgid "The DataStore for this resource does not contain any data."
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:114
+msgid "Total results:"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:168
+#: ckanext/dataextractor/templates/package/resource_extractor.html:194
+msgid "Download CSV"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:172
+msgid ""
+" Please mark a delimiter for the data you're about to download and click "
+"Download CSV. "
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:178
+msgid "Comma"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:181
+msgid "Semicolon"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:184
+msgid "Pipe"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:187
+msgid "Tab"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_extractor.html:193
+msgid "Close"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_base.html:29
+msgid "Edit resource"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_base.html:31
+msgid "DataStore"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_base.html:33
+msgid "Views"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_create.html:7
+msgid "Available Resource Filters"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_create.html:27
+#: ckanext/dataextractor/templates/package/resource_filters_edit.html:22
+msgid "Filter Name"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_create.html:28
+#: ckanext/dataextractor/templates/package/resource_filters_edit.html:23
+msgid "Filter Type"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_create.html:53
+#: ckanext/dataextractor/templates/package/resource_filters_edit.html:47
+msgid "Add"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_create.html:56
+msgid "All available resource filters have already been added."
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_edit.html:7
+msgid "Active Resource Filters"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_filters_edit.html:42
+msgid "This resource does not have active filters."
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:7
+msgid "Filter & Extract"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:13
+msgid "Download"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:17
+msgid "JSON"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:20
+msgid "CSV"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:23
+msgid "XLSX"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:26
+msgid "XML"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:31
+msgid "Downloads are limited to the most recent {search_limit} rows"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:41
+msgid "Manage"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/resource_read.html:46
+msgid "Data API"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:22
+msgid "CKAN Data API"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:26
+msgid "Access resource data via a web API with powerful query support"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:27
+msgid ""
+" Further information in the <a               "
+"href=\"http://docs.ckan.org/en/latest/maintaining/datastore.html\" "
+"target=\"_blank\">main CKAN Data API and DataStore documentation</a>.</p> "
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:36
+msgid "Endpoints"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:40
+msgid "The Data API can be accessed via the following actions of the CKAN action API."
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:50
+msgid "Update / Insert"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:54
+msgid "Query"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:58
+msgid "Query (via SQL)"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:70
+msgid "Querying"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:74
+msgid "Query example (first 5 results)"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:79
+msgid "Query example (results containing 'jones')"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:85
+msgid "Query example (via SQL statement)"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:97
+msgid "Example: Javascript"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:101
+msgid "A simple ajax (JSONP) request to the data API using jQuery."
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/api_info.html:122
+msgid "Example: Python"
+msgstr ""
+
+#: ckanext/dataextractor/templates/package/snippets/resource_item.html:23
+msgid "Preview"
+msgstr ""
+
