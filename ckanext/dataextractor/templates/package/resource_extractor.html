@@ -188,7 +188,13 @@
                     {% set v = value %}
                   {% endif %}
                 {% else %}
-                  {% set v = value %}
+                  {% if key|lower == "year" %}
+                    {% set v = value[:4] %}
+                  {% elif key|lower == "month" %}
+                    {% set v = value[:7] %}
+                  {% else %}  
+                    {% set v = value %}
+                  {% endif %}
                 {% endif %}
 
                 <td {% if value is number or value is none %} class="text-right" {% endif %}>{{ v }}</td>
