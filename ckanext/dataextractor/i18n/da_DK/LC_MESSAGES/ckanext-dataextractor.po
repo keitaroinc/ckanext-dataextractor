@@ -211,8 +211,8 @@ msgid "This resource does not have active filters."
 msgstr "Denne ressoruce har ingen aktive filtre"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:7
-msgid "Filter & Extract"
-msgstr "Filtrer og hent"
+msgid "Filter"
+msgstr "Filtrer"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:13
 msgid "Download"
@@ -240,7 +240,7 @@ msgstr "Downloads er begrænset til de nyeste {search_limit} rækker"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:41
 msgid "Manage"
-msgstr "Håndtere"
+msgstr "Administrer"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:46
 msgid "Data API"

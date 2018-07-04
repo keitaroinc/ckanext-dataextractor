@@ -205,7 +205,7 @@ msgid "This resource does not have active filters."
 msgstr ""
 
 #: ckanext/dataextractor/templates/package/resource_read.html:7
-msgid "Filter & Extract"
+msgid "Filter"
 msgstr ""
 
 #: ckanext/dataextractor/templates/package/resource_read.html:13
