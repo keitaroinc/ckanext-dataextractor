@@ -16,6 +16,7 @@ from xlsxwriter.workbook import Workbook
 from xml.etree.cElementTree import Element, SubElement, ElementTree
 from ckan.common import _
 from ckanext.dataextractor.helpers import CustomJSONEncoder
+import dateutil.parser as parser
 
 DUMP_FORMATS = 'csv', 'json', 'xml', 'xlsx'
 
@@ -137,13 +138,18 @@ class FileWriterService():
 
         return cStringIO.StringIO(output.getvalue())
 
-    def _xlsx_writer(self, fields, records):
+    def _xlsx_writer(self, fields, records, metadata):
 
         columns = [x['id'].encode("utf-8") for x in fields]
         output = cStringIO.StringIO()
 
-        workbook = Workbook(output)
+        workbook = Workbook(output, {'default_date_format': 'dd-mm-yy hh:mm'})
         worksheet = workbook.add_worksheet()
+
+        colTimestamp = []
+        for m in metadata['attributes']:
+            if m['type'] in ['timestamptz', 'timestamp', 'date']:
+                colTimestamp.append(m['name_of_field'])
 
         # Writing headers
         col = 0
@@ -156,14 +162,17 @@ class FileWriterService():
         for record in records:
             col = 0
             for column in columns:
-                worksheet.write(row, col, record[column])
+                if column in colTimestamp:
+                    worksheet.write_datetime(row, col, parser.parse(record[column]))
+                else:
+                    worksheet.write(row, col, record[column])
                 col += 1
             row += 1
 
         workbook.close()
         return cStringIO.StringIO(output.getvalue())
 
-    def write_to_file(self, fields, records, format, delimiter):
+    def write_to_file(self, fields, records, format, delimiter, metadata):
 
         format = format.lower()
         if format == 'csv':
@@ -173,6 +182,6 @@ class FileWriterService():
         if format == 'xml':
             return self._xml_writer(fields, records)
         if format == 'xlsx':
-            return self._xlsx_writer(fields, records)
+            return self._xlsx_writer(fields, records, metadata)
         raise l.ValidationError(_(
             u'format: must be one of %s') % u', '.join(DUMP_FORMATS))
