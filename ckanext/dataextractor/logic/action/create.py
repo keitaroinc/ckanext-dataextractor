@@ -124,7 +124,8 @@ def azure_blob_create(context, data_dict):
     stream = writer.write_to_file(resource_data.get('fields'),
                                   resource_data.get('records'),
                                   format,
-                                  delimiter)
+                                  delimiter,
+                                  resource)
     try:
         blob_url = azure_storage.blob_create(stream, format, name)
     except Exception as e:
