@@ -178,8 +178,8 @@
             <tr>
                 {% for key, value in record.iteritems() %}
 
+                {% set size = h.get_metadata_attr_field_for_column(key, 'size', c.resource_attr)|string %}
                 {% if value is number %}
-                  {% set size = h.get_metadata_attr_field_for_column(key, 'size', c.resource_attr)|string %}
                   {% set decimal = size.split('.')[1] %}
                   {% if decimal %}
                     {% set regex = '{0:,.' + decimal|string + 'f}' %}
@@ -187,14 +187,10 @@
                   {% else %}
                     {% set v = value %}
                   {% endif %}
+                {% elif value is string %}
+                  {% set v = value[:size|int] %}
                 {% else %}
-                  {% if key|lower == "year" %}
-                    {% set v = value[:4] %}
-                  {% elif key|lower == "month" %}
-                    {% set v = value[:7] %}
-                  {% else %}  
-                    {% set v = value %}
-                  {% endif %}
+                  {% set v = value %}
                 {% endif %}
 
                 <td {% if value is number or value is none %} class="text-right" {% endif %}>{{ v }}</td>
