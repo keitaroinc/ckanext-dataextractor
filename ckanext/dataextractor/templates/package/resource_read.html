@@ -20,7 +20,7 @@
         <a class="" data-format="csv" data-toggle="modal" data-target="#download_csv">{{_('CSV')}}...</a>
       </li>
       <li>
-        <a class="data-extract-btn" data-format="xlsx">{{_('XLSX')}}</a>
+        <a class="data-extract-btn" data-format="xlsx">{{_('XLSX - Excel')}}</a>
       </li>
       <li>
         <a class="data-extract-btn" data-format="xml">{{_('XML')}}</a>
@@ -28,7 +28,7 @@
       <li role="separator" class="divider"></li>
       <li class="dropdown-menu-notice">
         <span class="fa fa-info-circle"></span>
-        {% set search_limit_message = _('Downloads are limited to the most recent {search_limit} rows').format(search_limit=h.eds_search_limit()) %}
+        {% set search_limit_message = _('Downloads are limited to the top {search_limit} rows').format(search_limit=h.eds_search_limit()) %}
         <span class="fa-label">{{search_limit_message}}</span>
         </li>
     </ul>

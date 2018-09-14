@@ -227,16 +227,16 @@ msgid "CSV"
 msgstr "CSV"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:23
-msgid "XLSX"
-msgstr "XLSX"
+msgid "XLSX - Excel"
+msgstr "XLSX - Excel"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:26
 msgid "XML"
 msgstr "XML"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:31
-msgid "Downloads are limited to the most recent {search_limit} rows"
-msgstr "Downloads er begrænset til de nyeste {search_limit} rækker"
+msgid "Downloads are limited to the top {search_limit} rows"
+msgstr "Downloads er begrænset til de første {search_limit} rækker"
 
 #: ckanext/dataextractor/templates/package/resource_read.html:41
 msgid "Manage"

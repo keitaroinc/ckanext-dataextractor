@@ -221,7 +221,7 @@ msgid "CSV"
 msgstr ""
 
 #: ckanext/dataextractor/templates/package/resource_read.html:23
-msgid "XLSX"
+msgid "XLSX - Excel"
 msgstr ""
 
 #: ckanext/dataextractor/templates/package/resource_read.html:26
@@ -229,7 +229,7 @@ msgid "XML"
 msgstr ""
 
 #: ckanext/dataextractor/templates/package/resource_read.html:31
-msgid "Downloads are limited to the most recent {search_limit} rows"
+msgid "Downloads are limited to the top {search_limit} rows"
 msgstr ""
 
 #: ckanext/dataextractor/templates/package/resource_read.html:41
