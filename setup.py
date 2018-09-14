@@ -15,7 +15,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='1.2.2',
+    version='1.2.3',
 
     description='''This extension enables the end user to filter and extract resource data for a given date range. Admins can create additional filters for each resource.''',
     long_description=long_description,
