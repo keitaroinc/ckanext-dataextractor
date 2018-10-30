@@ -8,7 +8,7 @@ from ckan.common import c
 
 log = logging.getLogger(__name__)
 
-from ckanext.datastore.db import (_get_engine, _get_fields_types, _PG_ERR_CODE, _get_unique_key)
+from ckanext.datastore.backend.postgres import (_get_engine_from_url, _get_fields_types, _PG_ERR_CODE, _get_unique_key)
 from ckanext.dataextractor.helpers import get_operator, eds_search_limit
 from datetime import datetime, date, time
 from collections import OrderedDict
@@ -200,7 +200,8 @@ def _search_data(context, data_dict):
 
 
 def search(context, data_dict):
-    engine = _get_engine(data_dict)
+
+    engine = _get_engine_from_url(data_dict['connection_url'])
     context['connection'] = engine.connect()
 
     # Default timeout 60000 ms

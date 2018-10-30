@@ -1,33 +1,20 @@
-import logging
 from logging import getLogger
-from urllib import urlencode
-from urlparse import urlparse
 
-import ckan.plugins as plugins
 import ckan.plugins.toolkit as t
 import ckan.lib.plugins as lib_plugins
 
-from ckan.common import OrderedDict, _, json, request, c, g, response
-from ckan.controllers.package import (PackageController,
-                                      url_with_params,
-                                      _encode_params)
-
-from pylons import config
-from paste.deploy.converters import asbool
+from ckan.common import  _, request, c, g, response
+from ckan.controllers.package import PackageController
 
 import ckan.logic as l
 import ckan.lib.base as base
-import ckan.lib.maintain as maintain
 import ckan.lib.helpers as h
 import ckan.model as model
-import ckan.plugins as p
 import ckan.lib.render
-
-log = logging.getLogger(__name__)
 
 render = base.render
 abort = base.abort
-redirect = base.redirect
+redirect = t.redirect_to
 
 NotAuthorized = l.NotAuthorized
 ValidationError = l.ValidationError
@@ -37,9 +24,7 @@ tuplize_dict = l.tuplize_dict
 clean_dict = l.clean_dict
 parse_params = l.parse_params
 flatten_to_string_key = l.flatten_to_string_key
-
 lookup_package_plugin = ckan.lib.plugins.lookup_package_plugin
-
 logger = getLogger(__name__)
 
 

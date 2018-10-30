@@ -148,12 +148,12 @@ class DataextractorController(PackageController):
                                            request=request)
         except ValidationError as e:
             h.flash_error(e.error_dict['message'])
-            base.redirect(h.url_for(controller=CTRL,
+            p.toolkit.redirect_to(h.url_for(controller=CTRL,
                                     action='resource_extractor_show',
                                     id=id, resource_id=resource_id))
         except NotFound as e:
             h.flash_error(e.message)
-            base.redirect(h.url_for(controller='package',
+            p.toolkit.redirect_to(h.url_for(controller='package',
                                     action='resource_read',
                                     id=id, resource_id=c.resource['id']))
 
